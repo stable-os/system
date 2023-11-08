@@ -1,2 +1,2 @@
-apt-get update
-apt-get install ostree
+sudo apt-get update
+sudo apt-get install ostree
