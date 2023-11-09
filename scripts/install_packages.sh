@@ -7,3 +7,23 @@ do
     echo $package_name
     ostree --repo=$BUILD_REPO commit -b stable-os/$ARCH/$package_name --tree=tar=packages/$package/out.tar.gz
 done
+
+rm -rf packages
+
+for package in bash glibc coreutils; do
+  ostree --repo=$BUILD_REPO checkout -U --union stable-os/$ARCH/${package} stable-os-build
+done
+# Set up a "rofiles-fuse" mount point; this ensures that any processes
+# we run for post-processing of the tree don't corrupt the hardlinks.
+mkdir -p mnt
+rofiles-fuse stable-os-build mnt
+# Now run global "triggers", generate cache files:
+ldconfig -r mnt
+#   (Insert other programs here)
+
+# chroot mnt /bin/bash -c "echo test; exit"
+
+docker image build -t stable-os-build -f Dockerfile.build .
+
+fusermount -u mnt
+ostree --repo=$BUILD_REPO commit -b stable-os/$ARCH/standard --link-checkout-speedup stable-os-build

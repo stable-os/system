@@ -67,6 +67,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     needs: build_packages
+    permissions:
+      packages: write
+      contents: read
     env:
       TMPROOT: /mnt/tmproot
 
@@ -103,3 +106,17 @@ jobs:
 
         - name: Install packages to build repo
           run: ./scripts/prepare_ostree.sh
+        
+        - name: Login to GitHub Container Registry
+          uses: docker/login-action@v1
+          with:
+            registry: ghcr.io
+            username: ${{ github.actor }}
+            password: ${{ secrets.GITHUB_TOKEN }}
+
+        - name: Build and push Docker image
+          uses: docker/build-push-action@v2
+          with:
+            context: .
+            push: true
+            tags: ghcr.io/${{ github.repository }}/stable-os-build:latest
