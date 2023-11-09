@@ -114,9 +114,5 @@ jobs:
             username: ${{ github.actor }}
             password: ${{ secrets.GITHUB_TOKEN }}
 
-        - name: Build and push Docker image
-          uses: docker/build-push-action@v2
-          with:
-            context: .
-            push: true
-            tags: ghcr.io/${{ github.repository }}/stable-os-build:latest
+        - name: Push Docker image
+          run: docker push ghcr.io/${{ github.repository_owner }}/stable-os-build:latest
