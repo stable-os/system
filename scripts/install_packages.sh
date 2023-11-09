@@ -23,7 +23,7 @@ ldconfig -r mnt
 
 # chroot mnt /bin/bash -c "echo test; exit"
 
-docker image build -t stable-os-build -f Containerfile .
+docker image build -t ghcr.io/stable-os/stable-os-build -f Containerfile .
 
 fusermount -u mnt
 ostree --repo=$BUILD_REPO commit -b stable-os/$ARCH/standard --link-checkout-speedup stable-os-build
