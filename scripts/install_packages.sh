@@ -1,8 +1,6 @@
 BUILD_REPO=$TMPROOT/build-repo
 ARCH=$(uname -m)
 
-ls packages/*/*
-
 for package in packages/package_*
 do
     package_name=$(echo $package | sed 's/packages\/package_//')
@@ -10,13 +8,13 @@ do
 
     # extract package to tmp/install_packages
     mkdir -p /tmp/install_packages
-    tar -C /tmp/install_packages -xzf $package/out.tar.gz
+    tar -C /tmp/install_packages -xzf $PWD/$package/out.tar.gz
     # delete package.toml
     rm -rf /tmp/install_packages/package.toml
     # delete package
     rm -rf $package
     # create tar.gz
-    tar -C /tmp/install_packages -czf $package/out.tar.gz .
+    tar -C /tmp/install_packages -czf $PWD/$package/out.tar.gz .
     # delete /tmp/install_packages
     rm -rf /tmp/install_packages
 
@@ -24,6 +22,7 @@ do
 done
 
 rm -rf packages
+mkdir stable-os-build
 
 for package in bash glibc coreutils; do
   ostree --repo=$BUILD_REPO checkout -U --union stable-os/$ARCH/${package} stable-os-build
