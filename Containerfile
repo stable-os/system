@@ -2,4 +2,4 @@ FROM scratch
 
 COPY mnt .
 
-CMD ["/bin/bash"]
+CMD ["/usr/bin/bash"]
