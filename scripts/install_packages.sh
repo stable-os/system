@@ -1,6 +1,8 @@
 BUILD_REPO=$TMPROOT/build-repo
 ARCH=$(uname -m)
 
+ls packages/*/*
+
 for package in packages/package_*
 do
     package_name=$(echo $package | sed 's/packages\/package_//')
