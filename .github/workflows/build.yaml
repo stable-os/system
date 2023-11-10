@@ -112,7 +112,7 @@ jobs:
           run: ./scripts/prepare_ostree.sh
 
         - name: Install packages to build repo
-          run: ./scripts/prepare_ostree.sh
+          run: ./scripts/install_packages.sh
 
         - name: Push Docker image
           run: docker push ghcr.io/${{ github.repository_owner }}/stable-os-build:latest
