@@ -8,11 +8,11 @@ do
 
     # extract package to tmp/install_packages
     mkdir -p tmp/install_packages
-    tar -C tmp/install_packages -xzf $package
+    tar -C tmp/install_packages -xzf $package/out.tar.gz
     # delete package.toml
-    rm tmp/install_packages/package.toml
+    rm -rf tmp/install_packages/package.toml
     # delete package
-    rm $package
+    rm -rf $package
     # create tar.gz
     tar -C tmp/install_packages -czf $package/out.tar.gz .
     # delete tmp/install_packages
