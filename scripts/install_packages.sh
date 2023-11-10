@@ -6,19 +6,19 @@ ls packages/*/*
 for package in packages/package_*
 do
     package_name=$(echo $package | sed 's/packages\/package_//')
-    echo $package_name as stable-os/$ARCH/$package_name
+    echo $package_name as stable-os/$ARCH/$package_name from $package
 
     # extract package to tmp/install_packages
-    mkdir -p tmp/install_packages
-    tar -C tmp/install_packages -xzf $package/out.tar.gz
+    mkdir -p /tmp/install_packages
+    tar -C /tmp/install_packages -xzf $package/out.tar.gz
     # delete package.toml
-    rm -rf tmp/install_packages/package.toml
+    rm -rf /tmp/install_packages/package.toml
     # delete package
     rm -rf $package
     # create tar.gz
-    tar -C tmp/install_packages -czf $package/out.tar.gz .
-    # delete tmp/install_packages
-    rm -rf tmp/install_packages
+    tar -C /tmp/install_packages -czf $package/out.tar.gz .
+    # delete /tmp/install_packages
+    rm -rf /tmp/install_packages
 
     ostree --repo=$BUILD_REPO commit -b stable-os/$ARCH/$package_name --tree=tar=$package/out.tar.gz
 done
