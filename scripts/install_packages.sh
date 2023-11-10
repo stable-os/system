@@ -1,6 +1,5 @@
 BUILD_REPO=$TMPROOT/build-repo
 ARCH=$(uname -m)
-WORKING_DIR=$(pwd)
 
 for package in packages/package_*
 do
@@ -15,16 +14,16 @@ do
     file $package/out.tar.gz
 
     # extract package to tmp/install_packages
-    mkdir -p /tmp/install_packages
-    tar -C /tmp/install_packages -xzf $WORKING_DIR/$package/out.tar.gz
+    mkdir -p tmp_install_packages
+    tar -C tmp_install_packages -xzf ../$package/out.tar.gz
     # delete package.toml
-    rm -rf /tmp/install_packages/package.toml
+    rm -rf tmp_install_packages/package.toml
     # delete package
-    rm -rf $package
+    rm -rf $package/out.tar.gz
     # create tar.gz
-    tar -C /tmp/install_packages -czf $WORKING_DIR/$package/out.tar.gz .
-    # delete /tmp/install_packages
-    rm -rf /tmp/install_packages
+    tar -C tmp_install_packages -czf ../$package/out.tar.gz .
+    # delete tmp_install_packages
+    rm -rf tmp_install_packages
 
     ostree --repo=$BUILD_REPO commit -b stable-os/$ARCH/$package_name --tree=tar=$package/out.tar.gz
 done
