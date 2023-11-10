@@ -1,5 +1,6 @@
 BUILD_REPO=$TMPROOT/build-repo
 ARCH=$(uname -m)
+WORKING_DIR=$(pwd)
 
 for package in packages/package_*
 do
@@ -8,13 +9,13 @@ do
 
     # extract package to tmp/install_packages
     mkdir -p /tmp/install_packages
-    tar -C /tmp/install_packages -xzf $PWD/$package/out.tar.gz
+    tar -C /tmp/install_packages -xzf $WORKING_DIR/$package/out.tar.gz
     # delete package.toml
     rm -rf /tmp/install_packages/package.toml
     # delete package
     rm -rf $package
     # create tar.gz
-    tar -C /tmp/install_packages -czf $PWD/$package/out.tar.gz .
+    tar -C /tmp/install_packages -czf $WORKING_DIR/$package/out.tar.gz .
     # delete /tmp/install_packages
     rm -rf /tmp/install_packages
 
