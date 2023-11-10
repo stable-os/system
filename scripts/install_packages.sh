@@ -21,6 +21,9 @@ rofiles-fuse stable-os-build mnt
 ldconfig -r mnt
 #   (Insert other programs here)
 
+# tar filesystem for debugging
+tar -C mnt -czf stable-os-build.tar.gz .
+
 # chroot mnt /bin/bash -c "echo test; exit"
 
 docker image build -t ghcr.io/stable-os/stable-os-build -f Containerfile .
