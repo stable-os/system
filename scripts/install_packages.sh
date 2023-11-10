@@ -7,6 +7,13 @@ do
     package_name=$(echo $package | sed 's/packages\/package_//')
     echo $package_name as stable-os/$ARCH/$package_name from $package
 
+    ls $WORKING_DIR/$package
+    ls $WORKING_DIR/$package/out.tar.gz
+    file $WORKING_DIR/$package/out.tar.gz
+    ls $package
+    ls $package/out.tar.gz
+    file $package/out.tar.gz
+
     # extract package to tmp/install_packages
     mkdir -p /tmp/install_packages
     tar -C /tmp/install_packages -xzf $WORKING_DIR/$package/out.tar.gz
