@@ -50,7 +50,7 @@ jobs:
         path: pkg-builder
 
     - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y linux-headers-$(uname -r) meson ninja-build
+      run: sudo apt-get update && sudo apt-get install -y linux-headers-$(uname -r) meson ninja-build gperf libcap-dev autopoint
 
     - run: chmod +x pkg-builder/pkg-builder
 
