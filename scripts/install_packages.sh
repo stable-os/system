@@ -13,7 +13,7 @@ rm -rf packages
 mkdir stable-os-build
 
 for package in bash glibc coreutils; do
-  ostree --repo=$BUILD_REPO checkout -U --union stable-os/$ARCH/${package} stable-os-build
+  ostree --repo=$BUILD_REPO checkout -UC --union stable-os/$ARCH/${package} stable-os-build
 done
 # Set up a "rofiles-fuse" mount point; this ensures that any processes
 # we run for post-processing of the tree don't corrupt the hardlinks.
@@ -22,6 +22,7 @@ rofiles-fuse stable-os-build mnt
 # Now run global "triggers", generate cache files:
 ldconfig -r mnt
 #   (Insert other programs here)
+find mnt
 
 # tar filesystem for debugging
 tar -C mnt -czf stable-os-build.tar.gz .
