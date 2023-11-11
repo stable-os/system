@@ -14,6 +14,7 @@ mkdir stable-os-build
 
 for package in bash glibc coreutils; do
   ./ostree-ext-cli/ostree-ext-cli container unencapsulate --repo=$BUILD_REPO ostree-unverified-image:docker://ghcr.io/stable-os/package-$package-$ARCH:latest
+  ostree refs --repo=$BUILD_REPO
   ostree --repo=$BUILD_REPO checkout -UC --union stable-os/$ARCH/${package} stable-os-build
 done
 # Set up a "rofiles-fuse" mount point; this ensures that any processes
