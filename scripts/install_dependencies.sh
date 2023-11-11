@@ -7,5 +7,5 @@ source $HOME/.cargo/env
 
 chmod +x ./ostree-ext-cli/ostree-ext-cli
 
-git clone https://github.com/containers/skopeo $GOPATH/src/github.com/containers/skopeo
-cd $GOPATH/src/github.com/containers/skopeo && DISABLE_DOCS=1 make bin/skopeo && sudo make install
+git clone https://github.com/containers/skopeo /home/runner/go/src/github.com/containers/skopeo
+cd /home/runner/go/src/github.com/containers/skopeo && DISABLE_DOCS=1 make bin/skopeo && sudo make install
