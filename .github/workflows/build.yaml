@@ -89,7 +89,7 @@ jobs:
           run: ./scripts/install_packages.sh
 
         - name: Turn OSTree commit into OCI image
-          run: ostree-ext-cli container encapsulate --repo=$TMPROOT/build-repo stable-os/$(uname -m)/standard docker://ghcr.io/${{ github.repository_owner }}/stable-os-build:latest
+          run: ./ostree-ext-cli/ostree-ext-cli container encapsulate --repo=$TMPROOT/build-repo stable-os/$(uname -m)/standard docker://ghcr.io/${{ github.repository_owner }}/stable-os-build:latest
 
         - name: Upload filesystem image
           uses: actions/upload-artifact@v2
