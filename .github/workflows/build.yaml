@@ -96,6 +96,3 @@ jobs:
           with:
             name: filesystem
             path: stable-os-build.tar.gz
-
-        - name: Push Docker image
-          run: docker push ghcr.io/${{ github.repository_owner }}/stable-os-build:latest
