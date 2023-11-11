@@ -6,71 +6,8 @@ on:
     branches: [main]
 
 jobs:
-  build_pkg_builder:
-    runs-on: ubuntu-latest
-    # needs to run in the most recent version of Ubuntu to ensure that the ostree version is new enough
-    container: ubuntu:rolling
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        submodules: recursive
-        repository: stable-os/packages
-    - run: sudo curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-    - run: sudo apt-get install -y libssl-dev
-
-    - name: Cache
-      id: cache-pkg-builder-target
-      uses: actions/cache@v3
-      with:
-        path: util/pkg-builder/target/
-        key: ${{ runner.os }}-pkg-builder-target
-
-    - run: cargo build --release
-      working-directory: util/pkg-builder
-    # upload the binary as an artifact
-    - uses: actions/upload-artifact@v2
-      with:
-        name: pkg-builder
-        path: util/pkg-builder/target/release/pkg-builder
-
-  build_packages:
-    runs-on: ubuntu-latest
-    needs: build_pkg_builder
-    # needs to run in the most recent version of Ubuntu to ensure that the ostree version is new enough
-    container: ubuntu:rolling
-
-    strategy:
-      matrix:
-        package: ['pkg-builder', 'bash', 'glibc', 'coreutils']
-
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        repository: stable-os/packages
-    # download the pkg-builder binary from the previous job
-    - uses: actions/download-artifact@v2
-      with:
-        name: pkg-builder
-        path: pkg-builder
-
-    - name: Install dependencies
-      run: sudo apt-get update && sudo apt-get install -y linux-headers-$(uname -r) meson ninja-build gperf libcap-dev autopoint
-
-    - run: chmod +x pkg-builder/pkg-builder
-
-    - run: ../../pkg-builder/pkg-builder $PACKAGE.toml ../../out.tar.gz
-      working-directory: packages/${{ matrix.package }}
-      env:
-          PACKAGE: ${{ matrix.package }}
-
-    - uses: actions/upload-artifact@v2
-      with:
-        name: package_${{ matrix.package }}
-        path: out.tar.gz
-
   build:
     runs-on: ubuntu-latest
-    needs: build_packages
     permissions:
       packages: write
       contents: read
@@ -98,10 +35,6 @@ jobs:
             registry: ghcr.io
             username: ${{ github.actor }}
             password: ${{ secrets.GITHUB_TOKEN }}
-
-        - uses: actions/download-artifact@v3
-          with:
-            path: packages
 
         - name: Set script permissions
           run: chmod +x ./scripts/*.sh

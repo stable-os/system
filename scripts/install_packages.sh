@@ -1,18 +1,19 @@
 BUILD_REPO=$TMPROOT/build-repo
 ARCH=$(uname -m)
 
-for package in packages/package_*
-do
-    package_name=$(echo $package | sed 's/packages\/package_//')
-    echo $package_name as stable-os/$ARCH/$package_name from $package
+# for package in packages/package_*
+# do
+#     package_name=$(echo $package | sed 's/packages\/package_//')
+#     echo $package_name as stable-os/$ARCH/$package_name from $package
 
-    ostree --repo=$BUILD_REPO commit -b stable-os/$ARCH/$package_name --tree=tar=$package/out.tar.gz
-done
+#     ostree --repo=$BUILD_REPO commit -b stable-os/$ARCH/$package_name --tree=tar=$package/out.tar.gz
+# done
 
-rm -rf packages
+# rm -rf packages
 mkdir stable-os-build
 
 for package in bash glibc coreutils; do
+  ostree-ext-cli container unencapsulate --repo=$BUILD_REPO ostree-unverified-image:docker://ghcr.io/stable-os/package-$package-$ARCH:latest
   ostree --repo=$BUILD_REPO checkout -UC --union stable-os/$ARCH/${package} stable-os-build
 done
 # Set up a "rofiles-fuse" mount point; this ensures that any processes
