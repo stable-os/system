@@ -6,6 +6,37 @@ on:
     branches: [main]
 
 jobs:
+  build_ostree_ext_cli:
+    runs-on: ubuntu-latest
+    # needs to run in the most recent version of Ubuntu to ensure that the ostree version is new enough
+    container: ubuntu:rolling
+
+    steps:
+
+    - run: apt-get update && apt-get install -y libssl-dev ostree libostree-1-1 libostree-dev git curl build-essential
+    - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+    - uses: actions/checkout@v2
+      with:
+        repository: 'ostreedev/ostree-rs-ext'
+        path: 'ostree-rs-ext'
+      
+    - name: Cache
+      id: cache-ostree-rs-ext-target
+      uses: actions/cache@v3
+      with:
+        path: ostree-rs-ext/target/
+        key: ${{ runner.os }}-ostree-rs-ext-target
+
+    - run: $HOME/.cargo/bin/cargo build --release
+      working-directory: ostree-rs-ext
+    - run: ls ostree-rs-ext/target/release
+    # upload the binary as an artifact
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ostree-ext-cli
+        path: ostree-rs-ext/target/release/ostree-ext-cli
+
   build:
     runs-on: ubuntu-latest
     permissions:
@@ -28,6 +59,11 @@ jobs:
           
         - name: Checkout code
           uses: actions/checkout@v2
+
+        - uses: actions/download-artifact@v2
+          with:
+            name: ostree-ext-cli
+            path: ostree-ext-cli
 
         - name: Login to GitHub Container Registry
           uses: docker/login-action@v1
