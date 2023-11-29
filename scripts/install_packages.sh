@@ -12,7 +12,7 @@ ARCH=$(uname -m)
 # rm -rf packages
 mkdir stable-os-build
 
-for package in bash glibc coreutils selinux libcap libpcre2 ncurses; do
+for package in bash glibc coreutils selinux libcap libpcre2 ncurses pkg-builder; do
   ./ostree-ext-cli/ostree-ext-cli container unencapsulate --repo=$BUILD_REPO --write-ref=stable-os/$ARCH/${package} ostree-unverified-image:docker://ghcr.io/stable-os/package-$package-$ARCH:latest
   ostree refs --repo=$BUILD_REPO
   ostree --repo=$BUILD_REPO checkout -UC --union stable-os/$ARCH/${package} stable-os-build
