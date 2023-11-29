@@ -24,6 +24,9 @@ rofiles-fuse stable-os-build mnt
 # Now run global "triggers", generate cache files:
 ldconfig -r mnt
 #   (Insert other programs here)
+
+rm -rf mnt/package.toml
+
 find mnt
 
 # tar filesystem for debugging
