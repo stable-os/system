@@ -24,7 +24,7 @@ rofiles-fuse stable-os-build mnt
 # Now run global "triggers", generate cache files:
 ldconfig -r mnt
 #   (Insert other programs here)
-/usr/sbin/make-ca -g || true
+chroot mnt /usr/sbin/make-ca -g || true
 
 rm -rf mnt/package.toml
 
