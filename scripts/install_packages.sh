@@ -24,9 +24,12 @@ rofiles-fuse stable-os-build mnt
 # Now run global "triggers", generate cache files:
 ldconfig -r mnt
 #   (Insert other programs here)
-sudo chroot ./mnt /usr/sbin/make-ca -g || true
+
+# we can't do this right now because chmod does not work on Github Actions, would have to be left to the installer
+# sudo chroot ./mnt /usr/sbin/make-ca -g || true
 
 rm -rf mnt/package.toml
+ln -svf /usr/bin/bash $OUT/bin/sh
 
 find mnt
 
@@ -36,7 +39,6 @@ find mnt
 
 # chroot mnt /bin/bash -c "echo test; exit"
 
-ln -svf /usr/bin/bash $OUT/bin/sh
 
 fusermount -u mnt
 ostree --repo=$BUILD_REPO commit -b stable-os/$ARCH/standard --link-checkout-speedup stable-os-build
