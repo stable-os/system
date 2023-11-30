@@ -36,9 +36,7 @@ find mnt
 
 # chroot mnt /bin/bash -c "echo test; exit"
 
-ln -sv mnt/usr/bin mnt/bin
-ln -sv mnt/usr/sbin mnt/sbin
-ln -sv mnt/usr/lib mnt/lib
+ln -svf /usr/bin/bash $OUT/bin/sh
 
 fusermount -u mnt
 ostree --repo=$BUILD_REPO commit -b stable-os/$ARCH/standard --link-checkout-speedup stable-os-build
