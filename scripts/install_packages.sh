@@ -30,7 +30,8 @@ rm -rf mnt/package.toml
 find mnt
 
 # tar filesystem for debugging
-tar -C mnt -czf stable-os-build.tar.gz .
+# this is bugged and creates a massive (2GB) tarball, the OCI image is only 600MB
+# tar -C mnt -czf stable-os-build.tar.gz .
 
 # chroot mnt /bin/bash -c "echo test; exit"
 
