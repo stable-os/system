@@ -29,7 +29,7 @@ ldconfig -r mnt
 # sudo chroot ./mnt /usr/sbin/make-ca -g || true
 
 rm -rf mnt/package.toml
-ln -svf /usr/bin/bash $OUT/bin/sh
+ln -svf /usr/bin/bash mnt/bin/sh
 
 find mnt
 
