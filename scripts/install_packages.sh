@@ -12,7 +12,7 @@ ARCH=$(uname -m)
 # rm -rf packages
 mkdir stable-os-build
 
-for package in bash glibc coreutils selinux libcap libpcre2 ncurses pkg-builder gmp mpfr mpc gcc git tar zlib curl openssl p11-kit make-ca sed grep gawk readline libffi libtasn1 findutils xz binutils attr autoconf automake bc bison check dejagnu diffutils expat file gdbm gettext gperf intltool less libpipeline libtool libxcrypt m4 make manpages patch perl psmisc sysklogd tcl texinfo utillinux xmlparser zstd gzip linux-api-headers python3 which ostree glib libarchive libpgpme; do
+for package in bash glibc coreutils selinux libcap libpcre2 ncurses pkg-builder gmp mpfr mpc gcc git tar zlib curl openssl p11-kit make-ca sed grep gawk readline libffi libtasn1 findutils xz binutils attr autoconf automake bc bison check dejagnu diffutils expat file gdbm gettext gperf intltool less libpipeline libtool libxcrypt m4 make manpages patch perl psmisc sysklogd tcl texinfo utillinux xmlparser zstd gzip linux-api-headers python3 which ostree glib libarchive libpgpme libgpg-error; do
   ./ostree-ext-cli/ostree-ext-cli container unencapsulate --repo=$BUILD_REPO --write-ref=stable-os/$ARCH/${package} ostree-unverified-image:docker://ghcr.io/stable-os/package-$package-$ARCH:latest
   ostree refs --repo=$BUILD_REPO
   ostree --repo=$BUILD_REPO checkout -UC --union stable-os/$ARCH/${package} stable-os-build
