@@ -87,6 +87,7 @@ for package in bash \
     skopeo \
     lvm2 \
     pkgconf \
+    wget \
     perl; do
   ./ostree-ext-cli/ostree-ext-cli container unencapsulate --repo=$BUILD_REPO --write-ref=stable-os/$ARCH/${package} ostree-unverified-image:docker://ghcr.io/stable-os/package-$package-$ARCH:latest
   ostree refs --repo=$BUILD_REPO
