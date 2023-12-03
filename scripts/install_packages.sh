@@ -89,7 +89,15 @@ for package in bash \
     pkgconf \
     wget \
     perl; do
-  ./ostree-ext-cli/ostree-ext-cli container unencapsulate --repo=$BUILD_REPO --write-ref=stable-os/$ARCH/${package} ostree-unverified-image:docker://ghcr.io/stable-os/package-$package-$ARCH:latest
+    for usestableosbuiltpackageinstead in ncurses; do
+        if [ "$package" = "$usestableosbuiltpackageinstead" ]; then
+            # grab the stableosbuilt version instead
+            ./ostree-ext-cli/ostree-ext-cli container unencapsulate --repo=$BUILD_REPO --write-ref=stable-os/$ARCH/${package} ostree-unverified-image:docker://ghcr.io/stable-os/package-$package-$ARCH-builtonstableos:latest
+        else
+            # continue like normal
+            ./ostree-ext-cli/ostree-ext-cli container unencapsulate --repo=$BUILD_REPO --write-ref=stable-os/$ARCH/${package} ostree-unverified-image:docker://ghcr.io/stable-os/package-$package-$ARCH:latest
+        fi
+    done
   ostree refs --repo=$BUILD_REPO
   ostree --repo=$BUILD_REPO checkout -UC --union stable-os/$ARCH/${package} stable-os-build
 done
