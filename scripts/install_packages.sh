@@ -88,6 +88,7 @@ for package in bash \
     lvm2 \
     pkgconf \
     wget \
+    asciidoc \
     perl; do
     for usestableosbuiltpackageinstead in ncurses readline bash; do
         if [ "$package" = "$usestableosbuiltpackageinstead" ]; then
