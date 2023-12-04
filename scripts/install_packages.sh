@@ -89,6 +89,7 @@ for package in bash \
     pkgconf \
     wget \
     asciidoc \
+    meson \
     perl; do
     for usestableosbuiltpackageinstead in ncurses readline bash; do
         if [ "$package" = "$usestableosbuiltpackageinstead" ]; then
