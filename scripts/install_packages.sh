@@ -92,10 +92,11 @@ for package in bash \
     meson \
     flit-core \
     wheel \
+    essential-files \
     perl; do
 
     shouldusestableosbuiltpackageinstead=false
-    for usestableosbuiltpackageinstead in ncurses readline bash perl flit-core wheel; do
+    for usestableosbuiltpackageinstead in ncurses readline bash perl flit-core wheel essential-files; do
         if [ "$package" = "$usestableosbuiltpackageinstead" ]; then
             shouldusestableosbuiltpackageinstead=true
         fi
