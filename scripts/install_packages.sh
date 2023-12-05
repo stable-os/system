@@ -91,7 +91,7 @@ for package in bash \
     asciidoc \
     meson \
     perl; do
-    for usestableosbuiltpackageinstead in ncurses readline bash; do
+    for usestableosbuiltpackageinstead in ncurses readline bash perl; do
         if [ "$package" = "$usestableosbuiltpackageinstead" ]; then
             # cleanup to prevent issues
             ostree refs --delete --repo=$BUILD_REPO stable-os/$ARCH/${package} || true
