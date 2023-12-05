@@ -91,8 +91,9 @@ for package in bash \
     asciidoc \
     meson \
     flit-core \
+    wheel \
     perl; do
-    for usestableosbuiltpackageinstead in ncurses readline bash perl flit-core; do
+    for usestableosbuiltpackageinstead in ncurses readline bash perl flit-core wheel; do
         if [ "$package" = "$usestableosbuiltpackageinstead" ]; then
             # cleanup to prevent issues
             ostree refs --delete --repo=$BUILD_REPO stable-os/$ARCH/${package} || true
