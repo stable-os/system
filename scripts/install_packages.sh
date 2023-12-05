@@ -93,9 +93,18 @@ for package in bash \
     perl; do
     for usestableosbuiltpackageinstead in ncurses readline bash; do
         if [ "$package" = "$usestableosbuiltpackageinstead" ]; then
+            # cleanup to prevent issues
+            ostree refs --delete --repo=$BUILD_REPO stable-os/$ARCH/${package} || true
+
             # grab the stableosbuilt version instead
             ./ostree-ext-cli/ostree-ext-cli container unencapsulate --repo=$BUILD_REPO --write-ref=stable-os/$ARCH/${package} ostree-unverified-image:docker://ghcr.io/stable-os/package-$package-$ARCH-builtonstableos:latest
+
+            # end the usestableosbuiltpackageinstead loop
+            break
         else
+            # cleanup to prevent issues
+            ostree refs --delete --repo=$BUILD_REPO stable-os/$ARCH/${package} || true
+
             # continue like normal
             ./ostree-ext-cli/ostree-ext-cli container unencapsulate --repo=$BUILD_REPO --write-ref=stable-os/$ARCH/${package} ostree-unverified-image:docker://ghcr.io/stable-os/package-$package-$ARCH:latest
         fi
