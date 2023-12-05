@@ -111,6 +111,7 @@ for package in bash \
     done
   ostree refs --repo=$BUILD_REPO
   ostree --repo=$BUILD_REPO checkout -UC --union stable-os/$ARCH/${package} stable-os-build
+  find stable-os-build | grep bzip2
 done
 # Set up a "rofiles-fuse" mount point; this ensures that any processes
 # we run for post-processing of the tree don't corrupt the hardlinks.
