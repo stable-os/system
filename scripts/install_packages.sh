@@ -94,6 +94,7 @@ for package in bash \
     wheel \
     essential-files \
     ninja \
+    libdaemon \
     perl; do
 
     shouldusestableosbuiltpackageinstead=false
