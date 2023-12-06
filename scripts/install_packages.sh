@@ -105,6 +105,7 @@ for package in bash \
     shadow \
     timezonedata \
     libaio \
+    libxml2 \
     perl; do
 
     shouldusestableosbuiltpackageinstead=false
