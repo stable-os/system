@@ -93,6 +93,7 @@ for package in bash \
     flit-core \
     wheel \
     essential-files \
+    ninja \
     perl; do
 
     shouldusestableosbuiltpackageinstead=false
