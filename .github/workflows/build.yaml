@@ -4,6 +4,10 @@ name: Build
 on:
   push:
     branches: [main]
+  schedule:
+    # every day
+    - cron: '0 1 * * *'
+  workflow_dispatch: 
 
 jobs:
   build_ostree_ext_cli:
