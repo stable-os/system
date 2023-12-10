@@ -107,10 +107,11 @@ for package in bash \
     libaio \
     libxml2 \
     libxslt \
+    swig \
     perl; do
 
     shouldusestableosbuiltpackageinstead=false
-    for usestableosbuiltpackageinstead in flit-core ninja wheel meson asciidoc which linux-api-headers pkg-builder bash libcap libpcre2 ncurses gmp mpc mpfr tar zlib gzip curl openssl p11-kit make-ca grep gawk readline libffi libtasn1 findutils bzip2 xz attr autoconf automake bc bison check diffutils e2fsprogs expat file flex gdbm gettext gperf groff iana-etc kbd less libelf libpipeline libtool libxcrypt m4 make manpages patch perl pkgconf procps python3 shadow sysklogd tcl texinfo timezonedata utillinux xmlparser glib libarchive libpgpme libgpg-error avahi dbus libassuan wget essential-files libdaemon libaio libxslt libxml2 skopeo; do
+    for usestableosbuiltpackageinstead in flit-core ninja wheel meson asciidoc which linux-api-headers pkg-builder bash libcap libpcre2 ncurses gmp mpc mpfr tar zlib gzip curl openssl p11-kit make-ca grep gawk readline libffi libtasn1 findutils bzip2 xz attr autoconf automake bc bison check diffutils e2fsprogs expat file flex gdbm gettext gperf groff iana-etc kbd less libelf libpipeline libtool libxcrypt m4 make manpages patch perl pkgconf procps python3 shadow sysklogd tcl texinfo timezonedata utillinux xmlparser glib libarchive libpgpme libgpg-error avahi dbus libassuan wget essential-files libdaemon libaio libxslt libxml2 skopeo swig; do
         if [ "$package" = "$usestableosbuiltpackageinstead" ]; then
             shouldusestableosbuiltpackageinstead=true
         fi
