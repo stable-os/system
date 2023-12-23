@@ -118,6 +118,7 @@ for package in bash \
     docbook-xml \
     docbook-xsl-nons \
     libcap-ng \
+    xmlsax \
     perl; do
 
     shouldusestableosbuiltpackageinstead=false
