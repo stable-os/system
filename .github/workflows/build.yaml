@@ -97,11 +97,10 @@ jobs:
           run: ./scripts/install_packages.sh
 
         - name: Turn OSTree commit into OCI image
-          if: github.event_name != 'workflow_dispatch'
           run: ./ostree-ext-cli/ostree-ext-cli container encapsulate --repo=$TMPROOT/build-repo stable-os/$(uname -m)/standard docker://ghcr.io/${{ github.repository_owner }}/stable-os-build:latest
 
         # Used for creating stable build images
-        - name: Turn OSTree commit into OCI image
+        - name: Turn OSTree commit into OCI image for buildkit
           if: github.event_name == 'workflow_dispatch'
           run: ./ostree-ext-cli/ostree-ext-cli container encapsulate --repo=$TMPROOT/build-repo stable-os/$(uname -m)/standard docker://ghcr.io/${{ github.repository_owner }}/stable-os-buildkit:latest
 
