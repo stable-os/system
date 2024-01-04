@@ -130,6 +130,7 @@ for package in bash \
     dwarves \
     kmod \
     dracut \
+    ostree-ext-cli \
     perl; do
 
     # shouldusestableosbuiltpackageinstead=false
