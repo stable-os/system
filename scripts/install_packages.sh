@@ -129,6 +129,7 @@ for package in bash \
     elfutils \
     dwarves \
     kmod \
+    dracut \
     perl; do
 
     # shouldusestableosbuiltpackageinstead=false
