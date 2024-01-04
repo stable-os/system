@@ -128,6 +128,7 @@ for package in bash \
     cmake \
     elfutils \
     dwarves \
+    kmod \
     perl; do
 
     # shouldusestableosbuiltpackageinstead=false
