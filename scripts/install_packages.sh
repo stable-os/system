@@ -131,7 +131,7 @@ for package in bash \
     kmod \
     dracut \
     ostree-ext-cli \
-    \
+    grub \
     rsync \
     perl; do # linux \
 
