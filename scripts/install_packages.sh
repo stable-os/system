@@ -131,6 +131,7 @@ for package in bash \
     kmod \
     dracut \
     ostree-ext-cli \
+    linux \
     perl; do
 
     # shouldusestableosbuiltpackageinstead=false
