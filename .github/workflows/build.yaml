@@ -118,7 +118,7 @@ jobs:
   build_iso:
     runs-on: ubuntu-latest
     # needs: [build]
-    container: ghcr.io/stable-os/stable-os-build:latest
+    # container: ghcr.io/stable-os/stable-os-build:latest
 
     permissions:
       packages: read
@@ -131,9 +131,6 @@ jobs:
       # - name: Download filesystem image
       #   run: ostree-ext-cli container unencapsulate --repo=/tmp/build-repo ostree-unverified-registry:ghcr.io/stable-os/stable-os-build:latest
 
-      - name: Create sudo stub for maximum build space
-        run: echo "#!/bin/bash" > /usr/bin/sudo && chmod +x /usr/bin/sudo
-
       - name: Maximize build space
         uses: easimon/maximize-build-space@master
         with:
@@ -145,18 +142,21 @@ jobs:
           remove-codeql: 'true'
           build-mount-path: '/containertmpdir'
 
-      - name: Get CA certificates
-        run: make-ca -g
+      - name: Tell Docker to use the container directory
+        run: "echo \"{ \\\"data-root\\\": \\\"/containertmpdir\\\" }\" | sudo tee /etc/docker/daemon.json"
+        
+      - run: cat /etc/docker/daemon.json
+        
+      - name: Restart Docker
+        run: sudo systemctl restart docker 
 
-      - name: Download filesystem image
-        run: skopeo copy docker://ghcr.io/stable-os/stable-os-bootable:latest dir:/tmp/filesystemimage --dest-decompress
-      
-      - name: Extract filesystem image
-        # find the first tar archive in the folder, it has no file extension so it has to use `file` to figure out what it is
-        run: "mkdir /tmp/filesystemimage_decompressed && tar -xf $(file --mime-type /tmp/filesystemimage/* | awk -F': ' '$2==\"application/x-tar\"{print $1}' | head -n 1) -C /tmp/filesystemimage_decompressed"
+      - run: journalctl -xeu docker.service
 
-      - name: Delete sysroot folder from filesystem image
-        run: rm -rf /tmp/filesystemimage_decompressed/sysroot
-      
-      - name: Crease grub rescue image
-        run: grub-mkrescue -o /tmp/grub-rescue.iso /tmp/filesystemimage_decompressed
+      - name: Run build container
+        run: sudo docker run --rm -e GHCRTOKEN=${{ secrets.GITHUB_TOKEN }} -e ACTOR=${{ github.actor }} -v ./scripts/build_iso.sh:/build_iso.sh -v /containertmpdir:/shareddir ghcr.io/stable-os/stable-os-build:latest bash -c "chmod +x /build_iso.sh && /build_iso.sh"
+
+      - name: Upload ISO
+        uses: actions/upload-artifact@v2
+        with:
+          name: iso
+          path: /containertmpdir/grub-rescue.iso
