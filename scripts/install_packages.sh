@@ -133,6 +133,8 @@ for package in bash \
     ostree-ext-cli \
     grub \
     rsync \
+    libisofs \
+    libburn \
     perl; do # linux \
 
     # shouldusestableosbuiltpackageinstead=false
