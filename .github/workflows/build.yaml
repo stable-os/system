@@ -50,6 +50,13 @@ jobs:
     env:
       TMPROOT: /mnt/tmproot
 
+    strategy:
+      matrix:
+        edition:
+          - buildkit
+          - build
+          - bootable
+
     steps:
         # - name: Maximize build space
         #   uses: easimon/maximize-build-space@master
@@ -96,16 +103,15 @@ jobs:
         - name: Install packages to build repo
           run: ./scripts/install_packages.sh
           env:
-            # only yes if workflow_dispatch
-            INCLUDE_KERNEL: ${{ github.event_name == 'workflow_dispatch' }}
+            EDITION: ${{ matrix.edition }}
 
         - name: Turn OSTree commit into OCI image
-          run: ./ostree-ext-cli/ostree-ext-cli container encapsulate --repo=$TMPROOT/build-repo stable-os/$(uname -m)/standard docker://ghcr.io/${{ github.repository_owner }}/stable-os-build:latest
+          run: ./ostree-ext-cli/ostree-ext-cli container encapsulate --repo=$TMPROOT/build-repo stable-os/$(uname -m)/standard docker://ghcr.io/${{ github.repository_owner }}/stable-os-${{ matrix.edition }}:latest
 
         # Used for creating stable build images
         - name: Turn OSTree commit into OCI image for buildkit
           if: github.event_name == 'workflow_dispatch'
-          run: ./ostree-ext-cli/ostree-ext-cli container encapsulate --repo=$TMPROOT/build-repo stable-os/$(uname -m)/standard docker://ghcr.io/${{ github.repository_owner }}/stable-os-buildkit:latest
+          run: ./ostree-ext-cli/ostree-ext-cli container encapsulate --repo=$TMPROOT/build-repo stable-os/$(uname -m)/standard docker://ghcr.io/${{ github.repository_owner }}/stable-os-${{ matrix.edition }}:latest
 
         # this is bugged and creates a massive (2GB) tarball, the OCI image is only 600MB
         # - name: Upload filesystem image
@@ -114,7 +120,7 @@ jobs:
         #     name: filesystem
         #     path: stable-os-build.tar.gz
 
-  build_iso: # Note: these are unbootable unless its the workflow is ran manually, the kernel is not included if it's ran automatically
+  build_iso:
     runs-on: ubuntu-latest
     needs: [build]
     container: ghcr.io/stable-os/stable-os-build:latest
@@ -134,7 +140,7 @@ jobs:
         run: make-ca -g
 
       - name: Download filesystem image
-        run: skopeo copy docker://ghcr.io/stable-os/stable-os-build:latest dir:/tmp/filesystemimage --dest-decompress
+        run: skopeo copy docker://ghcr.io/stable-os/stable-os-bootable:latest dir:/tmp/filesystemimage --dest-decompress
       
       - name: Extract filesystem image
         # find the first tar archive in the folder, it has no file extension so it has to use `file` to figure out what it is
