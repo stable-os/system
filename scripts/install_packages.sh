@@ -12,6 +12,14 @@ ARCH=$(uname -m)
 # rm -rf packages
 mkdir stable-os-build
 
+if [ "$INCLUDE_KERNEL" = "true" ]; then
+    echo "Including the kernel"
+    ./ostree-ext-cli/ostree-ext-cli container unencapsulate --repo=$BUILD_REPO --write-ref=stable-os/$ARCH/linux ostree-unverified-image:docker://ghcr.io/stable-os/package-linux-$ARCH-builtonstableos:latest
+    ostree --repo=$BUILD_REPO checkout -UC --union stable-os/$ARCH/linux stable-os-build
+else
+    echo "Not including the kernel, include_kernel is set to $INCLUDE_KERNEL"
+fi
+
 for package in bash \
     glibc \
     coreutils \
@@ -154,6 +162,7 @@ for package in bash \
     fi
     ostree --repo=$BUILD_REPO checkout -UC --union stable-os/$ARCH/${package} stable-os-build
 done
+
 # Set up a "rofiles-fuse" mount point; this ensures that any processes
 # we run for post-processing of the tree don't corrupt the hardlinks.
 mkdir -p mnt

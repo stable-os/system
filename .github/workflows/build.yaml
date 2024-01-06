@@ -95,6 +95,9 @@ jobs:
 
         - name: Install packages to build repo
           run: ./scripts/install_packages.sh
+          env:
+            # only yes if workflow_dispatch
+            INCLUDE_KERNEL: ${{ github.event_name == 'workflow_dispatch' }}
 
         - name: Turn OSTree commit into OCI image
           run: ./ostree-ext-cli/ostree-ext-cli container encapsulate --repo=$TMPROOT/build-repo stable-os/$(uname -m)/standard docker://ghcr.io/${{ github.repository_owner }}/stable-os-build:latest
@@ -110,3 +113,32 @@ jobs:
         #   with:
         #     name: filesystem
         #     path: stable-os-build.tar.gz
+
+  build_iso: # Note: these are unbootable unless its the workflow is ran manually, the kernel is not included if it's ran automatically
+    runs-on: ubuntu-latest
+    needs: [build]
+    container: ghcr.io/stable-os/stable-os-build:latest
+
+    permissions:
+      packages: read
+      contents: read
+    
+    steps:
+      # - name: Prepare OSTree repository
+      #   run: mkdir /tmp/build-repo && ostree --repo=/tmp/build-repo init --mode=bare-user
+
+      # - name: Download filesystem image
+      #   run: ostree-ext-cli container unencapsulate --repo=/tmp/build-repo ostree-unverified-registry:ghcr.io/stable-os/stable-os-build:latest
+
+      - name: Download filesystem image
+        run: skopeo copy docker://ghcr.io/stable-os/stable-os-build:latest dir:/tmp/filesystemimage --dest-decompress
+      
+      - name: Extract filesystem image
+        # find the first tar archive in the folder, it has no file extension so it has to use `file` to figure out what it is
+        run: "mkdir /filesystemimage_decompressed && tar -xf $(file --mime-type /tmp/filesystemimage/* | awk -F': ' '$2==\"application/x-tar\"{print $1}' | head -n 1) -C /tmp/filesystemimage_decompressed"
+
+      - name: Delete sysroot folder from filesystem image
+        run: rm -rf /tmp/filesystemimage_decompressed/sysroot
+      
+      - name: Crease grub rescue image
+        run: grub-mkrescue -o /tmp/grub-rescue.iso /tmp/filesystemimage_decompressed
