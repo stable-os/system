@@ -138,7 +138,7 @@ jobs:
       
       - name: Extract filesystem image
         # find the first tar archive in the folder, it has no file extension so it has to use `file` to figure out what it is
-        run: "mkdir /filesystemimage_decompressed && tar -xf $(file --mime-type /tmp/filesystemimage/* | awk -F': ' '$2==\"application/x-tar\"{print $1}' | head -n 1) -C /tmp/filesystemimage_decompressed"
+        run: "mkdir /tmp/filesystemimage_decompressed && tar -xf $(file --mime-type /tmp/filesystemimage/* | awk -F': ' '$2==\"application/x-tar\"{print $1}' | head -n 1) -C /tmp/filesystemimage_decompressed"
 
       - name: Delete sysroot folder from filesystem image
         run: rm -rf /tmp/filesystemimage_decompressed/sysroot
