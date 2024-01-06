@@ -9,3 +9,6 @@ rm -rf /tmp/filesystemimage_decompressed/sysroot
 grub-mkrescue -o /tmp/grub-rescue.iso /tmp/filesystemimage_decompressed
 
 cp /tmp/grub-rescue.iso /shareddir/grub-rescue.iso
+
+# make iso readable by everyone
+chmod 777 /shareddir/grub-rescue.iso
