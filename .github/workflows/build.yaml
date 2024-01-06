@@ -158,6 +158,12 @@ jobs:
       - name: Run build container
         run: sudo docker run --rm -e GHCRTOKEN=${{ secrets.GITHUB_TOKEN }} -e ACTOR=${{ github.actor }} -v ./scripts/build_iso.sh:/build_iso.sh -v /containertmpdir:/shareddir ghcr.io/stable-os/stable-os-build:latest bash -c "chmod +x /build_iso.sh && /build_iso.sh"
 
+      - name: Take ownership of grub-rescue.iso
+        run: sudo chown root:root /containertmpdir/grub-rescue.iso
+      
+      - name: Give everyone read access to grub-rescue.iso
+        run: sudo chmod a+r /containertmpdir/grub-rescue.iso
+
       - name: Upload ISO
         uses: actions/upload-artifact@v2
         with:
