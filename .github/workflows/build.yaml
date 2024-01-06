@@ -142,6 +142,9 @@ jobs:
           remove-codeql: 'true'
           build-mount-path: '/containertmpdir'
 
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Tell Docker to use the container directory
         run: "echo \"{ \\\"data-root\\\": \\\"/containertmpdir\\\" }\" | sudo tee /etc/docker/daemon.json"
         
@@ -153,7 +156,7 @@ jobs:
       - run: journalctl -xeu docker.service
 
       - name: Run build container
-        run: sudo docker run --rm -e GHCRTOKEN=${{ secrets.GITHUB_TOKEN }} -e ACTOR=${{ github.actor }} -v ./scripts/build_iso.sh:/build_iso.sh -v /containertmpdir:/shareddir ghcr.io/stable-os/stable-os-build:latest bash -c "ls /build_iso.sh && chmod +x /build_iso.sh && /build_iso.sh"
+        run: sudo docker run --rm -e GHCRTOKEN=${{ secrets.GITHUB_TOKEN }} -e ACTOR=${{ github.actor }} -v ./scripts/build_iso.sh:/build_iso.sh -v /containertmpdir:/shareddir ghcr.io/stable-os/stable-os-build:latest bash -c "chmod +x /build_iso.sh && /build_iso.sh"
 
       - name: Upload ISO
         uses: actions/upload-artifact@v2
