@@ -133,6 +133,7 @@ for package in bash \
     ostree-ext-cli \
     grub \
     rsync \
+    libisoburn \
     libisofs \
     libburn \
     perl; do # linux \
@@ -152,7 +153,6 @@ for package in bash \
         ./ostree-ext-cli/ostree-ext-cli container unencapsulate --repo=$BUILD_REPO --write-ref=stable-os/$ARCH/${package} ostree-unverified-image:docker://ghcr.io/stable-os/package-$package-$ARCH:latest
     fi
     ostree --repo=$BUILD_REPO checkout -UC --union stable-os/$ARCH/${package} stable-os-build
-    find stable-os-build | grep bzip2
 done
 # Set up a "rofiles-fuse" mount point; this ensures that any processes
 # we run for post-processing of the tree don't corrupt the hardlinks.
