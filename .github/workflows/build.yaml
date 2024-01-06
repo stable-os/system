@@ -131,6 +131,9 @@ jobs:
       # - name: Download filesystem image
       #   run: ostree-ext-cli container unencapsulate --repo=/tmp/build-repo ostree-unverified-registry:ghcr.io/stable-os/stable-os-build:latest
 
+      - name: Create sudo stub for maximum build space
+        run: echo "#!/bin/bash" > /usr/bin/sudo
+
       - name: Maximize build space
         uses: easimon/maximize-build-space@master
         with:
