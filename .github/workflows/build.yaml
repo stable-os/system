@@ -134,7 +134,7 @@ jobs:
       - name: Maximize build space
         uses: easimon/maximize-build-space@master
         with:
-          root-reserve-mb: 4112
+          root-reserve-mb: 12288
           swap-size-mb: 1024
           remove-dotnet: 'true'
           remove-android: 'true'
@@ -158,14 +158,17 @@ jobs:
       - name: Run build container
         run: sudo docker run --rm -e GHCRTOKEN=${{ secrets.GITHUB_TOKEN }} -e ACTOR=${{ github.actor }} -v ./scripts/build_iso.sh:/build_iso.sh -v /containertmpdir:/shareddir ghcr.io/stable-os/stable-os-build:latest bash -c "chmod +x /build_iso.sh && /build_iso.sh"
 
+      - name: Copy grub-rescue.iiso
+        run: sudo cp /containertmpdir/grub-rescue.iso /grub-rescue.iso
+
       - name: Take ownership of grub-rescue.iso
-        run: sudo chown root:root /containertmpdir/grub-rescue.iso
+        run: sudo chown root:root /grub-rescue.iso
       
       - name: Give everyone read access to grub-rescue.iso
-        run: sudo chmod a+r /containertmpdir/grub-rescue.iso
+        run: sudo chmod a+r /grub-rescue.iso
 
       - name: Upload ISO
         uses: actions/upload-artifact@v2
         with:
           name: iso
-          path: /containertmpdir/grub-rescue.iso
+          path: /grub-rescue.iso
