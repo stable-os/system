@@ -130,6 +130,9 @@ jobs:
       # - name: Download filesystem image
       #   run: ostree-ext-cli container unencapsulate --repo=/tmp/build-repo ostree-unverified-registry:ghcr.io/stable-os/stable-os-build:latest
 
+      - name: Get CA certificates
+        run: make-ca -g
+
       - name: Download filesystem image
         run: skopeo copy docker://ghcr.io/stable-os/stable-os-build:latest dir:/tmp/filesystemimage --dest-decompress
       
