@@ -85,3 +85,5 @@ ostree-ext-cli
 grub
 linux
 zlib
+dracut
+squashfs-tools
