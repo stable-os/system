@@ -8,7 +8,11 @@ mkdir -pv /tmp/filesystemimage_decompressed/mnt/{lower,upper} && tar -xf $(file 
 mkdir -pv /tmp/filesystemimage_decompressed/{proc}
 
 # the boot stuff is in /mnt/lower, so this should be symlinked to /boot
-ln -svf /mnt/lower/boot /tmp/filesystemimage_decompressed/boot
+# ln -svf /mnt/lower/boot /tmp/filesystemimage_decompressed/boot
+# but because grub also wants to be in there all files have to be symlinked separately
+for file in $(ls /tmp/filesystemimage_decompressed/mnt/lower/boot); do
+    ln -svf /mnt/lower/boot/$file /tmp/filesystemimage_decompressed/boot/$file
+done
 
 # create the fstab file
 cat >/tmp/filesystemimage_decompressed/etc/fstab <<"EOF"
