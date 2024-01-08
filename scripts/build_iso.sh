@@ -7,9 +7,6 @@ mkdir -pv /tmp/filesystemimage_decompressed && tar -xf $(file --mime-type /tmp/f
 # this should get mounted later on by fstab i think
 mkdir -pv /tmp/filesystemimage_decompressed/{proc,tmp,etc,boot}
 
-# the boot stuff is in /mnt/lower, so this should be copied to /boot
-cp -r /tmp/filesystemimage_decompressed/mnt/lower/boot/* /tmp/filesystemimage_decompressed/boot
-
 # create the fstab file
 cat >/tmp/filesystemimage_decompressed/etc/fstab <<"EOF"
 # <file system> <mount point>   <type>  <options>       <dump>  <pass>
@@ -21,7 +18,7 @@ EOF
 rm -rf /tmp/filesystemimage_decompressed/sysroot
 
 # create squashfs image
-mksquashfs /tmp/filesystemimage_decompressed /tmp/filesystemimage_decompressed.squashfs -comp gzip -Xbcj x86 -b 1M -noappend
+mksquashfs /tmp/filesystemimage_decompressed /tmp/filesystemimage_decompressed.squashfs # -comp gzip -Xbcj x86 -b 1M -noappend
 
 mkdir -pv /tmp/livecd
 mv -v /tmp/filesystemimage_decompressed.squashfs /tmp/livecd/image.squashfs
