@@ -23,6 +23,10 @@ mksquashfs /tmp/filesystemimage_decompressed /tmp/filesystemimage_decompressed.s
 mkdir -pv /tmp/livecd
 mv -v /tmp/filesystemimage_decompressed.squashfs /tmp/livecd/image.squashfs
 
+# copy kernel, config and system map
+mkdir -pv /tmp/livecd/boot
+cp /tmp/filesystemimage_decompressed/boot/* /tmp/livecd/boot
+
 grub-mkrescue -o /tmp/grub-rescue.iso /tmp/livecd
 
 cp /tmp/grub-rescue.iso /shareddir/grub-rescue.iso
