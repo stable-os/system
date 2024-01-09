@@ -20,7 +20,7 @@ rm -rf /tmp/filesystemimage_decompressed/sysroot
 # create initramfs using dracut
 KERNEL_VERSION=$(find /tmp/filesystemimage_decompressed/lib/modules -maxdepth 1 -type d -printf "%f" | sed 's/modules//')
 echo KERNEL VERSION: $KERNEL_VERSION
-PATH="$PATH:/tmp/filesystemimage_decompressed/usr/lib/systemddracut" --sysroot /tmp/filesystemimage_decompressed /tmp/initramfs.img "$KERNEL_VERSION"
+PATH="$PATH:/tmp/filesystemimage_decompressed/usr/lib/systemd" dracut --sysroot /tmp/filesystemimage_decompressed /tmp/initramfs.img "$KERNEL_VERSION"
 
 # create squashfs image
 mksquashfs /tmp/filesystemimage_decompressed /tmp/filesystemimage_decompressed.squashfs # -comp gzip -Xbcj x86 -b 1M -noappend
