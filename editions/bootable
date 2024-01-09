@@ -77,3 +77,4 @@ zlib
 dracut
 squashfs-tools
 libcap-ng
+kmod
