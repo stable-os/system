@@ -117,7 +117,7 @@ jobs:
 
   build_iso:
     runs-on: ubuntu-latest
-    # needs: [build]
+    needs: [build]
     # container: ghcr.io/stable-os/stable-os-build:latest
 
     permissions:
@@ -156,7 +156,7 @@ jobs:
       - run: journalctl -xeu docker.service
 
       - name: Run build container
-        run: sudo docker run --rm -e GHCRTOKEN=${{ secrets.GITHUB_TOKEN }} -e ACTOR=${{ github.actor }} -v ./scripts/build_iso.sh:/build_iso.sh -v /containertmpdir:/shareddir ghcr.io/stable-os/stable-os-build:latest bash -c "chmod +x /build_iso.sh && /build_iso.sh"
+        run: sudo docker run --rm -e GHCRTOKEN=${{ secrets.GITHUB_TOKEN }} -e ACTOR=${{ github.actor }} -v ./scripts/build_iso.sh:/build_iso.sh -v /containertmpdir:/shareddir ghcr.io/stable-os/stable-os-bootable:latest bash -c "chmod +x /build_iso.sh && /build_iso.sh"
 
       - name: Copy grub-rescue.iso
         run: sudo cp /containertmpdir/grub-rescue.iso /grub-rescue.iso
