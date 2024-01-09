@@ -79,3 +79,4 @@ squashfs-tools
 libcap-ng
 kmod
 cpio
+mpfr
