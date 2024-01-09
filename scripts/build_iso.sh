@@ -17,15 +17,20 @@ EOF
 
 rm -rf /tmp/filesystemimage_decompressed/sysroot
 
+# create initramfs using dracut
+KERNEL_VERSION=$(find /lib/modules -maxdepth 1 -type d | sort | head -n 2 | tail -n 1)
+dracut --sysroot /tmp/filesystemimage_decompressed /tmp/initramfs.img $KERNEL_VERSION
+
 # create squashfs image
 mksquashfs /tmp/filesystemimage_decompressed /tmp/filesystemimage_decompressed.squashfs # -comp gzip -Xbcj x86 -b 1M -noappend
 
-mkdir -pv /tmp/livecd
-mv -v /tmp/filesystemimage_decompressed.squashfs /tmp/livecd/image.squashfs
+mkdir -pv /tmp/livecd/LiveOS
+mv -v /tmp/filesystemimage_decompressed.squashfs /tmp/livecd/squashfs.img
 
 # copy kernel, config and system map
 mkdir -pv /tmp/livecd/boot
 cp /tmp/filesystemimage_decompressed/boot/* /tmp/livecd/boot
+cp /tmp/initramfs.img /tmp/livecd/boot/initramfs.img
 
 grub-mkrescue -o /tmp/grub-rescue.iso /tmp/livecd
 
