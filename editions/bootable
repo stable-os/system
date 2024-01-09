@@ -78,3 +78,4 @@ dracut
 squashfs-tools
 libcap-ng
 kmod
+cpio
