@@ -17,6 +17,9 @@ EOF
 
 rm -rf /tmp/filesystemimage_decompressed/sysroot
 
+mount --bind /proc /tmp/filesystemimage_decompressed/proc
+mount --bind /dev /tmp/filesystemimage_decompressed/dev
+
 # create initramfs using dracut
 chroot /tmp/filesystemimage_decompressed /usr/bin/bash <<"EOT"
 KERNEL_VERSION=$(find /lib/modules -maxdepth 1 -type d -printf "%f" | sed 's/modules//')
