@@ -34,8 +34,19 @@ umount /tmp/filesystemimage_decompressed/dev
 cp /tmp/filesystemimage_decompressed/tmp/initramfs.img /tmp/initramfs.img
 rm -rf /tmp/filesystemimage_decompressed/tmp/initramfs.img
 
+# move to ext4 img file
+dd if=/dev/zero of=/tmp/filesystemimage_decompressed.ext4 bs=1M count=4096
+mkfs.ext4 /tmp/filesystemimage_decompressed.ext4
+mount /tmp/filesystemimage_decompressed.ext4 /tmp/filesystemimage_decompressed_ext4
+cp -a /tmp/filesystemimage_decompressed/* /tmp/filesystemimage_decompressed_ext4
+umount /tmp/filesystemimage_decompressed_ext4
+
+# move to squashfs img file
+mkdir -pv /tmp/squashfsimage/LiveOS
+cp /tmp/filesystemimage_decompressed.ext4 /tmp/squashfsimage/LiveOS/rootfs.img
+
 # create squashfs image
-mksquashfs /tmp/filesystemimage_decompressed /tmp/filesystemimage_decompressed.squashfs # -comp gzip -Xbcj x86 -b 1M -noappend
+mksquashfs /tmp/squashfsimage /tmp/filesystemimage_decompressed.squashfs # -comp gzip -Xbcj x86 -b 1M -noappend
 
 mkdir -pv /tmp/livecd/LiveOS
 mv -v /tmp/filesystemimage_decompressed.squashfs /tmp/livecd/LiveOS/squashfs.img
