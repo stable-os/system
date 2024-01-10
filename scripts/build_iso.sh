@@ -38,7 +38,7 @@ rm -rf /tmp/filesystemimage_decompressed/tmp/initramfs.img
 mksquashfs /tmp/filesystemimage_decompressed /tmp/filesystemimage_decompressed.squashfs # -comp gzip -Xbcj x86 -b 1M -noappend
 
 mkdir -pv /tmp/livecd/LiveOS
-mv -v /tmp/filesystemimage_decompressed.squashfs /tmp/livecd/squashfs.img
+mv -v /tmp/filesystemimage_decompressed.squashfs /tmp/livecd/LiveOS/squashfs.img
 
 # copy kernel, config and system map
 mkdir -pv /tmp/livecd/boot
