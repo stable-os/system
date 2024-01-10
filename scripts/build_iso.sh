@@ -27,6 +27,9 @@ echo KERNEL VERSION: $KERNEL_VERSION
 dracut /tmp/initramfs.img "$KERNEL_VERSION"
 EOT
 
+umount /tmp/filesystemimage_decompressed/proc
+umount /tmp/filesystemimage_decompressed/dev
+
 cp /tmp/filesystemimage_decompressed/tmp/initramfs.img /tmp/initramfs.img
 rm -rf /tmp/filesystemimage_decompressed/tmp/initramfs.img
 
