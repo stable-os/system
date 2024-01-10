@@ -35,7 +35,7 @@ cp /tmp/filesystemimage_decompressed/tmp/initramfs.img /tmp/initramfs.img
 rm -rf /tmp/filesystemimage_decompressed/tmp/initramfs.img
 
 # move to ext4 img file
-dd if=/dev/zero of=/tmp/filesystemimage_decompressed.ext4 bs=1M count=4096
+dd if=/dev/zero of=/tmp/filesystemimage_decompressed.ext4 bs=1M count=8192
 mkfs.ext4 /tmp/filesystemimage_decompressed.ext4
 mkdir /tmp/filesystemimage_decompressed_ext4
 mount /tmp/filesystemimage_decompressed.ext4 /tmp/filesystemimage_decompressed_ext4
