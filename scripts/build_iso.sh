@@ -17,6 +17,7 @@ EOF
 
 rm -rf /tmp/filesystemimage_decompressed/sysroot
 
+mkdir /tmp/filesystemimage_decompressed/{proc,dev}
 mount --bind /proc /tmp/filesystemimage_decompressed/proc
 mount --bind /dev /tmp/filesystemimage_decompressed/dev
 
