@@ -84,3 +84,6 @@ mpc
 gmp
 tar
 gcc
+libisoburn
+libisofs
+libburn
