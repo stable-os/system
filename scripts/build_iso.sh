@@ -8,12 +8,12 @@ mkdir -pv /tmp/filesystemimage_decompressed && tar -xf $(file --mime-type /tmp/f
 mkdir -pv /tmp/filesystemimage_decompressed/{proc,tmp,etc,boot}
 
 # create the fstab file
-cat >/tmp/filesystemimage_decompressed/etc/fstab <<"EOF"
-# <file system> <mount point>   <type>  <options>       <dump>  <pass>
-tmpfs           /tmp            tmpfs   defaults        0       0
-/dev/sr0        /media/cdrom0   udf,iso9660 user,noauto     0       0
-/media/cdrom0/image.squashfs / squashfs ro,loop 0 0
-EOF
+# cat >/tmp/filesystemimage_decompressed/etc/fstab <<"EOF"
+# # <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# tmpfs           /tmp            tmpfs   defaults        0       0
+# /dev/sr0        /media/cdrom0   udf,iso9660 user,noauto     0       0
+# /media/cdrom0/image.squashfs / squashfs ro,loop 0 0
+# EOF
 
 rm -rf /tmp/filesystemimage_decompressed/sysroot
 
