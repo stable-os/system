@@ -34,20 +34,29 @@ umount /tmp/filesystemimage_decompressed/dev
 cp /tmp/filesystemimage_decompressed/tmp/initramfs.img /tmp/initramfs.img
 rm -rf /tmp/filesystemimage_decompressed/tmp/initramfs.img
 
-# move to ext4 img file
-dd if=/dev/zero of=/tmp/filesystemimage_decompressed.ext4 bs=1M count=8192
-mkfs.ext4 /tmp/filesystemimage_decompressed.ext4
-mkdir /tmp/filesystemimage_decompressed_ext4
-mount /tmp/filesystemimage_decompressed.ext4 /tmp/filesystemimage_decompressed_ext4
-cp -a /tmp/filesystemimage_decompressed/* /tmp/filesystemimage_decompressed_ext4
-umount /tmp/filesystemimage_decompressed_ext4
+# set to false to place root fs on squashfs, true to place it inside ext4 wrapper
+USE_EXT4=false
 
-# move to squashfs img file
-mkdir -pv /tmp/squashfsimage/LiveOS
-cp /tmp/filesystemimage_decompressed.ext4 /tmp/squashfsimage/LiveOS/rootfs.img
+if [ "$USE_EXT4" = true ]; then
+    echo "Using ext4 wrapper"
+    # move to ext4 img file
+    dd if=/dev/zero of=/tmp/filesystemimage_decompressed.ext4 bs=1M count=8192
+    mkfs.ext4 /tmp/filesystemimage_decompressed.ext4
+    mkdir /tmp/filesystemimage_decompressed_ext4
+    mount /tmp/filesystemimage_decompressed.ext4 /tmp/filesystemimage_decompressed_ext4
+    cp -a /tmp/filesystemimage_decompressed/* /tmp/filesystemimage_decompressed_ext4
+    umount /tmp/filesystemimage_decompressed_ext4
 
-# create squashfs image
-mksquashfs /tmp/squashfsimage /tmp/filesystemimage_decompressed.squashfs # -comp gzip -Xbcj x86 -b 1M -noappend
+    # move to squashfs img file
+    mkdir -pv /tmp/squashfsimage/LiveOS
+    cp /tmp/filesystemimage_decompressed.ext4 /tmp/squashfsimage/LiveOS/rootfs.img
+
+    # create squashfs image
+    mksquashfs /tmp/squashfsimage /tmp/filesystemimage_decompressed.squashfs # -comp gzip -Xbcj x86 -b 1M -noappend
+else
+    echo "Using squashfs"
+    mksquashfs /tmp/filesystemimage_decompressed /tmp/filesystemimage_decompressed.squashfs # -comp gzip -Xbcj x86 -b 1M -noappend
+fi
 
 mkdir -pv /tmp/livecd/LiveOS
 mv -v /tmp/filesystemimage_decompressed.squashfs /tmp/livecd/LiveOS/squashfs.img
