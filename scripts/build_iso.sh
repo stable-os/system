@@ -38,6 +38,15 @@ rm -rf /tmp/filesystemimage_decompressed/tmp/initramfs.img
 # password is "root"
 cat >/tmp/filesystemimage_decompressed/etc/passwd <<"EOF"
 root:x:0:0:root:/root:/bin/bash
+bin:x:1:1:bin:/dev/null:/usr/bin/false
+daemon:x:6:6:Daemon User:/dev/null:/usr/bin/false
+messagebus:x:18:18:D-Bus Message Daemon User:/run/dbus:/usr/bin/false
+uuidd:x:80:80:UUID Generation Daemon User:/dev/null:/usr/bin/false
+nobody:x:65534:65534:Unprivileged User:/dev/null:/usr/bin/false
+systemd-network:x:104:109:systemd Network Management,,,:/run/systemd:/usr/sbin/nologin
+systemd-resolve:x:105:110:systemd Resolver,,,:/run/systemd:/usr/sbin/nologin
+systemd-timesync:x:999:999:systemd Time Synchronization:/:/usr/sbin/nologin
+systemd-coredump:x:998:998:systemd Core Dumper:/:/usr/sbin/nologin
 EOF
 
 cat >/tmp/filesystemimage_decompressed/etc/shadow <<"EOF"
