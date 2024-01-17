@@ -34,6 +34,16 @@ umount /tmp/filesystemimage_decompressed/dev
 cp /tmp/filesystemimage_decompressed/tmp/initramfs.img /tmp/initramfs.img
 rm -rf /tmp/filesystemimage_decompressed/tmp/initramfs.img
 
+# create passwd and shadow files for root login
+# password is "root"
+cat >/tmp/filesystemimage_decompressed/etc/passwd <<"EOF"
+root:x:0:0:root:/root:/bin/bash
+EOF
+
+cat >/tmp/filesystemimage_decompressed/etc/shadow <<"EOF"
+root:$1$cln3295b$cIb9zBngnbVV/PLn05q.T0
+EOF
+
 # set to false to place root fs on squashfs, true to place it inside ext4 wrapper
 USE_EXT4=false
 
