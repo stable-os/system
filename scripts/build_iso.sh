@@ -95,6 +95,27 @@ cat >/tmp/filesystemimage_decompressed/etc/shadow <<"EOF"
 root:$1$cln3295b$cIb9zBngnbVV/PLn05q.T0:19740::::::
 EOF
 
+mkdir -pv /tmp/filesystemimage_decompressed/boot/grub
+
+cat >/tmp/filesystemimage_decompressed/boot/grub/grub.cfg <<"EOF"
+# Begin /boot/grub/grub.cfg
+set default=0
+set timeout=5
+
+insmod part_gpt
+insmod ext2
+
+menuentry "Linux 6.4.12-lfs-12.0" {
+    linux   /boot/vmlinuz-6.4.12-lfs-12.0 root=live:/dev/sr0 rd.live.overlay.overlayfs=1 console=ttyS0,115200n8 console=tty0
+    initrd  /boot/initramfs.img
+}
+
+menuentry "Linux 6.4.12-lfs-12.0 RESCUE MODE" {
+    linux   /boot/vmlinuz-6.4.12-lfs-12.0 root=live:/dev/sr0 rd.live.overlay.overlayfs=1 console=ttyS0,115200n8 console=tty0 systemd.unit=rescue.target
+    initrd  /boot/initramfs.img
+}
+EOF
+
 # set to false to place root fs on squashfs, true to place it inside ext4 wrapper
 USE_EXT4=false
 
