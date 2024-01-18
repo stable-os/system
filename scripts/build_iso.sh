@@ -90,8 +90,9 @@ users:x:999:
 nogroup:x:65534:
 EOF
 
+# password is "root"
 cat >/tmp/filesystemimage_decompressed/etc/shadow <<"EOF"
-root:$1$cln3295b$cIb9zBngnbVV/PLn05q.T0
+root:$1$cln3295b$cIb9zBngnbVV/PLn05q.T0:19740::::::
 EOF
 
 # set to false to place root fs on squashfs, true to place it inside ext4 wrapper
