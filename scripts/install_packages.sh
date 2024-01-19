@@ -44,7 +44,12 @@ ldconfig -r mnt
 
 rm -rf mnt/package.toml
 # ln -svf /usr/bin/bash mnt/bin/sh
+
+# there are still some files in the top directories that need to be moved to /usr
+cp mnt/sbin/* mnt/usr/sbin/
+
 ln -svf /usr/bin mnt/bin
+ln -svf /usr/sbin mnt/sbin
 ln -svf /usr/lib mnt/lib
 
 find mnt
