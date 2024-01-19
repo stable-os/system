@@ -47,6 +47,7 @@ rm -rf mnt/package.toml
 
 # there are still some files in the top directories that need to be moved to /usr
 cp mnt/sbin/* mnt/usr/sbin/
+rm -rf mnt/sbin
 
 ln -svf /usr/bin mnt/bin
 ln -svf /usr/sbin mnt/sbin
