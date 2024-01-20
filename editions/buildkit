@@ -125,3 +125,4 @@ libburn
 perl
 squashfs-tools
 libyaml
+bash-completion
