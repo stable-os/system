@@ -124,3 +124,4 @@ libisofs
 libburn
 perl
 squashfs-tools
+libyaml
