@@ -126,3 +126,4 @@ perl
 squashfs-tools
 libyaml
 bash-completion
+pathspec
