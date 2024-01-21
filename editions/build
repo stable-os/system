@@ -127,3 +127,4 @@ squashfs-tools
 libyaml
 bash-completion
 pathspec
+pluggy
