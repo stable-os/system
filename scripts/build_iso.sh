@@ -25,7 +25,7 @@ mount --bind /dev /tmp/filesystemimage_decompressed/dev
 chroot /tmp/filesystemimage_decompressed /usr/bin/bash <<"EOT"
 KERNEL_VERSION=$(find /lib/modules -maxdepth 1 -type d -printf "%f" | sed 's/modules//')
 echo KERNEL VERSION: $KERNEL_VERSION
-dracut --add "dmsquash-live" /tmp/initramfs.img "$KERNEL_VERSION"
+dracut -o "dracut-systemd" --add "dmsquash-live" /tmp/initramfs.img "$KERNEL_VERSION"
 
 systemctl preset-all
 EOT
