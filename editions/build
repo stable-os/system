@@ -129,3 +129,4 @@ bash-completion
 pathspec
 pluggy
 packaging
+trove-classifiers
