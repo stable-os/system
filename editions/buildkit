@@ -139,3 +139,4 @@ pytest
 coverage
 cffi
 pycparser
+cmocka
