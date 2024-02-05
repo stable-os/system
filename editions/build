@@ -138,3 +138,4 @@ iniconfig
 pytest
 coverage
 cffi
+pycparser
