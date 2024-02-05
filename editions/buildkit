@@ -142,3 +142,4 @@ pycparser
 cmocka
 pycodestyle
 pyflakes
+netplan
