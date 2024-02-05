@@ -136,3 +136,4 @@ hatch-vcs
 setuptools-scm
 iniconfig
 pytest
+coverage
