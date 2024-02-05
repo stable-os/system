@@ -131,3 +131,4 @@ pluggy
 packaging
 trove-classifiers
 editables
+hatchling
