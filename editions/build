@@ -140,3 +140,5 @@ coverage
 cffi
 pycparser
 cmocka
+pycodestyle
+pyflakes
