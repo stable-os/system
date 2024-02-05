@@ -137,3 +137,4 @@ setuptools-scm
 iniconfig
 pytest
 coverage
+cffi
