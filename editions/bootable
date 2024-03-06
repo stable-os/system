@@ -95,3 +95,5 @@ libxml2
 netplan
 bootc
 libogg
+libpng
+pixman
