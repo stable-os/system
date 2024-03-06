@@ -143,3 +143,4 @@ cmocka
 pycodestyle
 pyflakes
 netplan
+bootc
