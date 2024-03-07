@@ -100,3 +100,4 @@ pixman
 docbook-xsl
 freetype
 fontconfig
+cairo
