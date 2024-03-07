@@ -108,3 +108,4 @@ shared-mime-info
 harfbuzz
 gobject-introspection
 gsettings-desktop-schemas
+gdk-pixbuf
