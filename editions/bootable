@@ -109,3 +109,4 @@ harfbuzz
 gobject-introspection
 gsettings-desktop-schemas
 gdk-pixbuf
+icu
