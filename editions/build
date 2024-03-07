@@ -151,3 +151,7 @@ docbook-xsl
 freetype
 fontconfig
 cairo
+fribidi
+graphite2
+libjpeg-turbo
+shared-mime-info
