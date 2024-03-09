@@ -117,3 +117,6 @@ xcb-proto
 xbitmaps
 libxcvt
 libvorbis
+glslang
+xkeyboardconfig
+xorgproto
