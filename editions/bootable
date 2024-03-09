@@ -111,3 +111,8 @@ gsettings-desktop-schemas
 gdk-pixbuf
 icu
 pango
+libdrm
+util-macros
+xcb-proto
+xbitmaps
+libxcvt
