@@ -181,3 +181,4 @@ xcb-util-renderutil
 xcb-util-wm
 wayland
 wayland-protocols
+libxkbcommon
