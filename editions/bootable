@@ -132,3 +132,4 @@ xcb-util-wm
 wayland
 wayland-protocols
 libxkbcommon
+xcb-util
