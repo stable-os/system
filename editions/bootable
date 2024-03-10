@@ -125,3 +125,7 @@ mako
 libxau
 libxcb
 xorg-libraries
+libxcvt
+xcb-util-keysyms
+xcb-util-renderutil
+xcb-util-wm
