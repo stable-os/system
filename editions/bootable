@@ -133,3 +133,4 @@ wayland
 wayland-protocols
 libxkbcommon
 xcb-util
+xcb-util-image
