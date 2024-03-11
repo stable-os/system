@@ -216,7 +216,8 @@ libseccomp
 libtiff
 libunistring
 libwebp
-libwebplibxmlb
+libwpe
+libxmlb
 little-cms2
 nettle
 nspr
@@ -228,3 +229,11 @@ sqlite
 totem-pl-parser
 unifdef
 vala
+appstream
+gnome-autoar
+gsound
+gnutls
+gst-plugins-base
+libical
+libsecret
+yelp-xsl
