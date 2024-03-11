@@ -135,3 +135,4 @@ libxkbcommon
 xcb-util
 xcb-util-image
 xcb-util-cursor
+libsigc
