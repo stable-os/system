@@ -105,8 +105,14 @@ jobs:
           env:
             EDITION: ${{ matrix.edition }}
 
-        - name: Turn OSTree commit into OCI image
-          run: ./ostree-ext-cli/ostree-ext-cli container encapsulate --repo=$TMPROOT/build-repo stable-os/$(uname -m)/standard docker://ghcr.io/${{ github.repository_owner }}/stable-os-${{ matrix.edition }}:latest
+        - name: Create OCI image
+          run: docker build -t ghcr.io/${{ github.repository_owner }}/stable-os-${{ matrix.edition }}:latest -f ./Containerfile .
+
+        - name: Push OCI image
+          run: docker push ghcr.io/${{ github.repository_owner }}/stable-os-${{ matrix.edition }}:latest
+
+        #- name: Turn OSTree commit into OCI image
+        #  run: ./ostree-ext-cli/ostree-ext-cli container encapsulate --repo=$TMPROOT/build-repo stable-os/$(uname -m)/standard docker://ghcr.io/${{ github.repository_owner }}/stable-os-${{ matrix.edition }}:latest
 
         # this is bugged and creates a massive (2GB) tarball, the OCI image is only 600MB
         # - name: Upload filesystem image

@@ -61,5 +61,10 @@ find mnt
 
 # chroot mnt /bin/bash -c "echo test; exit"
 
+# Copy all files to a new directory
+mkdir unlinked
+# but exclude the folder mnt/sysroot
+rsync -a --exclude=sysroot mnt/ unlinked/
+
 fusermount -u mnt
 ostree --repo=$BUILD_REPO commit -b stable-os/$ARCH/standard --link-checkout-speedup stable-os-build

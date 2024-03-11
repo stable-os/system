@@ -1,5 +1,5 @@
 FROM scratch
 
-COPY mnt .
+COPY unlinked .
 
 CMD ["/usr/bin/bash"]
