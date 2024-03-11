@@ -140,3 +140,4 @@ at-spi2-core
 mm-common
 glibmm
 atkmm
+llvm
