@@ -188,3 +188,4 @@ xcb-util-cursor
 libsigc
 at-spi2-core
 mm-common
+glibmm
