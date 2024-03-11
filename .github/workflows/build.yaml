@@ -65,7 +65,6 @@ jobs:
           with:
             root-reserve-mb: 40960
             temp-reserve-mb: 20480
-            overprovision-lvm: 'true'
             swap-size-mb: 1024
             remove-dotnet: 'true'
             remove-codeql: 'true'
