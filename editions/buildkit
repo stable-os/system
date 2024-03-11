@@ -192,3 +192,5 @@ glibmm
 atkmm
 llvm
 mesa
+libepoxy
+gtk3
