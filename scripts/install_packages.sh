@@ -29,6 +29,10 @@ for package in $(cat editions/$EDITION); do
         ./ostree-ext-cli/ostree-ext-cli container unencapsulate --repo=$BUILD_REPO --write-ref=stable-os/$ARCH/${package} ostree-unverified-image:docker://ghcr.io/stable-os/package-$package-$ARCH:latest
     fi
     ostree --repo=$BUILD_REPO checkout -UC --union stable-os/$ARCH/${package} stable-os-build
+
+    # delete and recreate build repo to save disk space
+    rm -rf $BUILD_REPO
+    ostree --repo=$BUILD_REPO init --mode=bare-user
 done
 
 # Set up a "rofiles-fuse" mount point; this ensures that any processes
