@@ -59,16 +59,16 @@ jobs:
           - build-test
 
     steps:
-        # - name: Maximize build space
-        #   uses: easimon/maximize-build-space@master
-        #   with:
-        #     root-reserve-mb: 512
-        #     swap-size-mb: 1024
-        #     remove-dotnet: 'true'
-        #     remove-codeql: 'true'
-        #     remove-android: 'true'
-        #     remove-haskell: 'true'
-        #     remove-docker-images: 'true'
+        - name: Maximize build space
+          uses: easimon/maximize-build-space@master
+          with:
+            root-reserve-mb: 512
+            swap-size-mb: 1024
+            remove-dotnet: 'true'
+            remove-codeql: 'true'
+            remove-android: 'true'
+            remove-haskell: 'true'
+            remove-docker-images: 'true'
           
         - name: Checkout code
           uses: actions/checkout@v2
