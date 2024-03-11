@@ -56,6 +56,7 @@ jobs:
           - buildkit
           - build
           - bootable
+          - build-test
 
     steps:
         # - name: Maximize build space
