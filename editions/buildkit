@@ -247,4 +247,14 @@ libadwaita
 rest
 vte
 libksba
+bubblewrap
+grilo
+enchant2
+krb5
+libpeas
+libshumate
+openjpeg
+pycairo
+pygobject
+libsoup2
 npth
