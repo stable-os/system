@@ -260,3 +260,6 @@ libsoup2
 npth
 xdg-desktop-portal
 tracker
+gnupg
+openldap-client
+libgweather
