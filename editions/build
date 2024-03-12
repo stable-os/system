@@ -237,3 +237,6 @@ gst-plugins-base
 libical
 libsecret
 yelp-xsl
+glib-networking
+gst-plugins-bad
+wpe-backend-fdo
