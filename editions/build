@@ -246,3 +246,5 @@ gnome-desktop
 libadwaita
 rest
 vte
+libksba
+npth
