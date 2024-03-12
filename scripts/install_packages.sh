@@ -1,6 +1,11 @@
 BUILD_REPO=$TMPROOT/build-repo
 ARCH=$(uname -m)
 
+# Emmediately quit upon an error
+# Sometimes a package fails to download,
+# without this it would just ship without the package
+set -e
+
 # for package in packages/package_*
 # do
 #     package_name=$(echo $package | sed 's/packages\/package_//')
