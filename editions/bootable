@@ -190,3 +190,9 @@ wpebackend-fdo
 boost
 gtk4
 libsoup3
+exempi
+geocode-glib
+gnome-desktop
+libadwaita
+rest
+vte
