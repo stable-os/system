@@ -258,3 +258,5 @@ pycairo
 pygobject
 libsoup2
 npth
+xdg-desktop-portal
+tracker
