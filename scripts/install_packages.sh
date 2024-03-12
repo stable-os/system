@@ -40,6 +40,8 @@ for package in $(cat editions/$EDITION); do
     ostree --repo=$BUILD_REPO init --mode=bare-user
 done
 
+set +e
+
 # Set up a "rofiles-fuse" mount point; this ensures that any processes
 # we run for post-processing of the tree don't corrupt the hardlinks.
 mkdir -p mnt
