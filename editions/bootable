@@ -228,3 +228,5 @@ libaom
 libavif
 libusb
 upower
+tracker-miners
+xdg-dbus-proxy
