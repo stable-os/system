@@ -265,3 +265,7 @@ openldap-client
 libgweather
 xdg-desktop-portal-gnome
 xdg-desktop-portal-gtk
+sdl12-compat
+brotli
+openssh
+libgrss
