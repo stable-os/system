@@ -282,8 +282,5 @@ tracker-miners
 xdg-dbus-proxy
 inih
 exiv2
-gexiv2
-markdown
-pygments
-smartypants
-spidermonkey
+gjs
+typogrify

@@ -237,3 +237,5 @@ markdown
 pygments
 smartypants
 spidermonkey
+gjs
+typogrify
