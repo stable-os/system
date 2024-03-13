@@ -219,3 +219,6 @@ sdl12-compat
 brotli
 openssh
 libgrss
+gnome-online-accounts
+yasm
+nss
