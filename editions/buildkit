@@ -275,3 +275,6 @@ nss
 gcr3
 gcr4
 libaom
+libavif
+libusb
+upower
