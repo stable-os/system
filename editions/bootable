@@ -213,5 +213,5 @@ tracker
 gnupg
 openldap-client
 libgweather
-xdg-desktop-gnome
-xdg-desktop-gtk
+xdg-desktop-portal-gnome
+xdg-desktop-portal-gtk
