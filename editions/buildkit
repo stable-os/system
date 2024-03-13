@@ -280,3 +280,4 @@ libusb
 upower
 tracker-miners
 xdg-dbus-proxy
+inih
