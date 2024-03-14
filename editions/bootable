@@ -233,10 +233,10 @@ xdg-dbus-proxy
 inih
 exiv2
 gexiv2
-markdown
-pygments
-smartypants
 spidermonkey
 gjs
 typogrify
 webkitgtk
+markdown
+pygments
+smartypants

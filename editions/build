@@ -285,3 +285,6 @@ exiv2
 gjs
 typogrify
 webkitgtk
+markdown
+pygments
+smartypants
