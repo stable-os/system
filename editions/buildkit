@@ -306,3 +306,4 @@ dconf
 duktape
 libgusb
 libmbim
+libsndfile
