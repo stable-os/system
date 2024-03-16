@@ -291,3 +291,12 @@ pygments
 smartypants
 libwnck
 evolution-data-server
+alsa-lib
+attrs
+gnome-session
+keyutils
+libhandy
+libnotify
+notification-daemon
+sassc
+startup-notification
