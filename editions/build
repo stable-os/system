@@ -300,3 +300,8 @@ libnotify
 notification-daemon
 sassc
 startup-notification
+libei
+dconf
+duktape
+libgusb
+libmbim
