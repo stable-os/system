@@ -282,6 +282,7 @@ tracker-miners
 xdg-dbus-proxy
 inih
 exiv2
+spidermonkey
 gjs
 typogrify
 webkitgtk
