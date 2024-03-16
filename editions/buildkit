@@ -323,3 +323,5 @@ libinput
 libwacom
 accountsservice
 flatpak
+gdm
+ibus
