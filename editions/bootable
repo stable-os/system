@@ -259,3 +259,5 @@ libmbim
 libsndfile
 polkit
 libxdmcp
+libqmi
+pulseaudio
