@@ -320,3 +320,6 @@ libevdev
 mtdev
 pyparsing
 libinput
+libwacom
+accountsservice
+flatpak
