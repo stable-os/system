@@ -311,3 +311,5 @@ libxdmcp
 libqmi
 pulseaudio
 dconf-editor
+modemmanager
+colord
