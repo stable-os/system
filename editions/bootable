@@ -257,3 +257,5 @@ duktape
 libgusb
 libmbim
 libsndfile
+polkit
+libxdmcp
