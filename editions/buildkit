@@ -319,3 +319,4 @@ geoclue
 libevdev
 mtdev
 pyparsing
+libinput
