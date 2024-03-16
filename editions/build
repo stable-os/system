@@ -324,3 +324,5 @@ accountsservice
 flatpak
 gdm
 ibus
+cups
+libtirpc
