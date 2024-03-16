@@ -266,3 +266,5 @@ modemmanager
 colord
 ucd
 geoclue
+libevdev
+mtdev
