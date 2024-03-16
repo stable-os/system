@@ -317,3 +317,4 @@ ucd
 geoclue
 libevdev
 mtdev
+pyparsing
