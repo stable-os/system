@@ -261,3 +261,4 @@ polkit
 libxdmcp
 libqmi
 pulseaudio
+dconf-editor
