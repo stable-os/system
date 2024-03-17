@@ -57,8 +57,8 @@ ldconfig -r mnt
 
 # temporarily move into the mnt directory to run create_users_and_groups.sh
 cd mnt
-chmod +x ../create_users_and_groups.sh
-../create_users_and_groups.sh
+chmod +x ../scripts/create_users_and_groups.sh
+../scripts/create_users_and_groups.sh
 cd ..
 
 # cleanup
