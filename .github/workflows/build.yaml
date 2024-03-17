@@ -179,3 +179,61 @@ jobs:
         with:
           name: iso
           path: /grub-rescue.iso
+
+  build_iso_alt:
+    runs-on: ubuntu-latest
+    # needs: [build]
+    # container: ghcr.io/stable-os/stable-os-build:latest
+
+    permissions:
+      packages: read
+      contents: read
+
+    steps:
+      # - name: Prepare OSTree repository
+      #   run: mkdir /tmp/build-repo && ostree --repo=/tmp/build-repo init --mode=bare-user
+
+      # - name: Download filesystem image
+      #   run: ostree-ext-cli container unencapsulate --repo=/tmp/build-repo ostree-unverified-registry:ghcr.io/stable-os/stable-os-build:latest
+
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 12288
+          swap-size-mb: 1024
+          remove-dotnet: "true"
+          remove-android: "true"
+          remove-haskell: "true"
+          remove-codeql: "true"
+          build-mount-path: "/containertmpdir"
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Tell Docker to use the container directory
+        run: "echo \"{ \\\"data-root\\\": \\\"/containertmpdir\\\" }\" | sudo tee /etc/docker/daemon.json"
+
+      - run: cat /etc/docker/daemon.json
+
+      - name: Restart Docker
+        run: sudo systemctl restart docker
+
+      - run: journalctl -xeu docker.service
+
+      - name: Run build container
+        run: sudo docker run --privileged --rm -e GHCRTOKEN=${{ secrets.GITHUB_TOKEN }} -e ACTOR=${{ github.actor }} -v ./scripts/build_iso_alt.sh:/build_iso.sh -v /containertmpdir:/shareddir ghcr.io/stable-os/stable-os-bootable:latest bash -c "chmod +x /build_iso.sh && /build_iso.sh"
+
+      - name: Copy grub-rescue.iso
+        run: sudo cp /containertmpdir/grub-rescue.iso /grub-rescue.iso
+
+      - name: Take ownership of grub-rescue.iso
+        run: sudo chown root:root /grub-rescue.iso
+
+      - name: Give everyone read access to grub-rescue.iso
+        run: sudo chmod a+r /grub-rescue.iso
+
+      - name: Upload ISO
+        uses: actions/upload-artifact@v2
+        with:
+          name: iso_alt
+          path: /grub-rescue.iso
