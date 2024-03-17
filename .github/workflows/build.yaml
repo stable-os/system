@@ -1,4 +1,3 @@
-
 name: Build
 
 on:
@@ -6,8 +5,8 @@ on:
     branches: [main]
   schedule:
     # every day
-    - cron: '0 1 * * *'
-  workflow_dispatch: 
+    - cron: "0 1 * * *"
+  workflow_dispatch:
 
 jobs:
   build_ostree_ext_cli:
@@ -16,30 +15,29 @@ jobs:
     container: ubuntu:rolling
 
     steps:
+      - run: apt-get update && apt-get install -y libssl-dev ostree libostree-1-1 libostree-dev git curl build-essential
+      - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
-    - run: apt-get update && apt-get install -y libssl-dev ostree libostree-1-1 libostree-dev git curl build-essential
-    - run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+      - uses: actions/checkout@v2
+        with:
+          repository: "ostreedev/ostree-rs-ext"
+          path: "ostree-rs-ext"
 
-    - uses: actions/checkout@v2
-      with:
-        repository: 'ostreedev/ostree-rs-ext'
-        path: 'ostree-rs-ext'
-      
-    - name: Cache
-      id: cache-ostree-rs-ext-target
-      uses: actions/cache@v3
-      with:
-        path: ostree-rs-ext/target/
-        key: ${{ runner.os }}-ostree-rs-ext-target
+      - name: Cache
+        id: cache-ostree-rs-ext-target
+        uses: actions/cache@v3
+        with:
+          path: ostree-rs-ext/target/
+          key: ${{ runner.os }}-ostree-rs-ext-target
 
-    - run: $HOME/.cargo/bin/cargo build --release
-      working-directory: ostree-rs-ext
-    - run: ls ostree-rs-ext/target/release
-    # upload the binary as an artifact
-    - uses: actions/upload-artifact@v2
-      with:
-        name: ostree-ext-cli
-        path: ostree-rs-ext/target/release/ostree-ext-cli
+      - run: $HOME/.cargo/bin/cargo build --release
+        working-directory: ostree-rs-ext
+      - run: ls ostree-rs-ext/target/release
+      # upload the binary as an artifact
+      - uses: actions/upload-artifact@v2
+        with:
+          name: ostree-ext-cli
+          path: ostree-rs-ext/target/release/ostree-ext-cli
 
   build:
     runs-on: ubuntu-latest
@@ -60,79 +58,79 @@ jobs:
           - build-test
 
     steps:
-        - name: Maximize build space
-          uses: easimon/maximize-build-space@master
-          with:
-            root-reserve-mb: 30720
-            temp-reserve-mb: 20480
-            swap-size-mb: 1024
-            remove-dotnet: 'true'
-            remove-codeql: 'true'
-            remove-android: 'true'
-            remove-haskell: 'true'
-            remove-docker-images: 'true'
-          
-        - name: Checkout code
-          uses: actions/checkout@v2
+      - name: Maximize build space
+        uses: easimon/maximize-build-space@master
+        with:
+          root-reserve-mb: 30720
+          temp-reserve-mb: 20480
+          swap-size-mb: 1024
+          remove-dotnet: "true"
+          remove-codeql: "true"
+          remove-android: "true"
+          remove-haskell: "true"
+          remove-docker-images: "true"
 
-        - uses: actions/download-artifact@v2
-          with:
-            name: ostree-ext-cli
-            path: ostree-ext-cli
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-        - name: Login to GitHub Container Registry
-          uses: docker/login-action@v1
-          with:
-            registry: ghcr.io
-            username: ${{ github.actor }}
-            password: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/download-artifact@v2
+        with:
+          name: ostree-ext-cli
+          path: ostree-ext-cli
 
-        - uses: actions/setup-go@v4
-          with:
-            go-version: '>=1.19.0'
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-        - name: Set script permissions
-          run: chmod +x ./scripts/*.sh
+      - uses: actions/setup-go@v4
+        with:
+          go-version: ">=1.19.0"
 
-        - name: Set script permissions
-          run: chmod +x ./scripts/*.sh
+      - name: Set script permissions
+        run: chmod +x ./scripts/*.sh
 
-        - name: Install dependencies
-          run: ./scripts/install_dependencies.sh
+      - name: Set script permissions
+        run: chmod +x ./scripts/*.sh
 
-        - name: Prepare OSTree
-          run: ./scripts/prepare_ostree.sh
+      - name: Install dependencies
+        run: ./scripts/install_dependencies.sh
 
-        - name: Install packages to build repo
-          run: ./scripts/install_packages.sh
-          env:
-            EDITION: ${{ matrix.edition }}
+      - name: Prepare OSTree
+        run: ./scripts/prepare_ostree.sh
 
-        - name: Create OCI image
-          run: docker build -t ghcr.io/${{ github.repository_owner }}/stable-os-${{ matrix.edition }}:latest -f ./Containerfile .
+      - name: Install packages to build repo
+        run: ./scripts/install_packages.sh
+        env:
+          EDITION: ${{ matrix.edition }}
 
-        - name: Push OCI image
-          run: docker push ghcr.io/${{ github.repository_owner }}/stable-os-${{ matrix.edition }}:latest
+      - name: Create OCI image
+        run: docker build -t ghcr.io/${{ github.repository_owner }}/stable-os-${{ matrix.edition }}:latest -f ./Containerfile .
 
-        #- name: Turn OSTree commit into OCI image
-        #  run: ./ostree-ext-cli/ostree-ext-cli container encapsulate --repo=$TMPROOT/build-repo stable-os/$(uname -m)/standard docker://ghcr.io/${{ github.repository_owner }}/stable-os-${{ matrix.edition }}:latest
+      - name: Push OCI image
+        run: docker push ghcr.io/${{ github.repository_owner }}/stable-os-${{ matrix.edition }}:latest
 
-        # this is bugged and creates a massive (2GB) tarball, the OCI image is only 600MB
-        # - name: Upload filesystem image
-        #   uses: actions/upload-artifact@v2
-        #   with:
-        #     name: filesystem
-        #     path: stable-os-build.tar.gz
+      #- name: Turn OSTree commit into OCI image
+      #  run: ./ostree-ext-cli/ostree-ext-cli container encapsulate --repo=$TMPROOT/build-repo stable-os/$(uname -m)/standard docker://ghcr.io/${{ github.repository_owner }}/stable-os-${{ matrix.edition }}:latest
+
+      # this is bugged and creates a massive (2GB) tarball, the OCI image is only 600MB
+      # - name: Upload filesystem image
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: filesystem
+      #     path: stable-os-build.tar.gz
 
   build_iso:
     runs-on: ubuntu-latest
-    needs: [build]
+    # needs: [build]
     # container: ghcr.io/stable-os/stable-os-build:latest
 
     permissions:
       packages: read
       contents: read
-    
+
     steps:
       # - name: Prepare OSTree repository
       #   run: mkdir /tmp/build-repo && ostree --repo=/tmp/build-repo init --mode=bare-user
@@ -145,22 +143,22 @@ jobs:
         with:
           root-reserve-mb: 12288
           swap-size-mb: 1024
-          remove-dotnet: 'true'
-          remove-android: 'true'
-          remove-haskell: 'true'
-          remove-codeql: 'true'
-          build-mount-path: '/containertmpdir'
+          remove-dotnet: "true"
+          remove-android: "true"
+          remove-haskell: "true"
+          remove-codeql: "true"
+          build-mount-path: "/containertmpdir"
 
       - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Tell Docker to use the container directory
         run: "echo \"{ \\\"data-root\\\": \\\"/containertmpdir\\\" }\" | sudo tee /etc/docker/daemon.json"
-        
+
       - run: cat /etc/docker/daemon.json
-        
+
       - name: Restart Docker
-        run: sudo systemctl restart docker 
+        run: sudo systemctl restart docker
 
       - run: journalctl -xeu docker.service
 
@@ -172,7 +170,7 @@ jobs:
 
       - name: Take ownership of grub-rescue.iso
         run: sudo chown root:root /grub-rescue.iso
-      
+
       - name: Give everyone read access to grub-rescue.iso
         run: sudo chmod a+r /grub-rescue.iso
 
