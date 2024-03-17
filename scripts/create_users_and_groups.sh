@@ -9,10 +9,15 @@ for package in $(ls ./etc/pkgs); do
 
   echo "Handling package $package."
 
+  yq /tmp/pkgpostinstall/package.toml
+
   # split all the users and groups into separate files
   # and move them to the folders
   yq '.user.[]' /tmp/pkgpostinstall/package.toml -oy -s '"/tmp/pkgpostinstall/users/" + .id'
   yq '.group.[]' /tmp/pkgpostinstall/package.toml -oy -s '"/tmp/pkgpostinstall/groups/" + .id'
+
+  ls -l /tmp/pkgpostinstall/users
+  ls -l /tmp/pkgpostinstall/groups
 
   for group in $(ls /tmp/pkgpostinstall/groups); do
     id = $(yq '.id' /tmp/pkgpostinstall/groups/$group)
