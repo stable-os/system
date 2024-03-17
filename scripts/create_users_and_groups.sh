@@ -19,28 +19,28 @@ for package in $(ls ./etc/pkgs); do
   ls -l /tmp/pkgpostinstall/users
   ls -l /tmp/pkgpostinstall/groups
 
-  for group in $(ls /tmp/pkgpostinstall/groups); do
-    id = $(yq '.id' /tmp/pkgpostinstall/groups/$group)
-    name = $(yq '.name' /tmp/pkgpostinstall/groups/$group)
+  for group in /tmp/pkgpostinstall/groups/*; do
+    local ID = $(yq '.id' /tmp/pkgpostinstall/groups/$group)
+    local NAME = $(yq '.name' /tmp/pkgpostinstall/groups/$group)
 
-    echo "Adding group $name with id $id."
+    echo "Adding group $NAME with id $ID."
 
     # add the group
-    echo "$id::$name:" >> ./etc/group
+    echo "$ID::$NAME:" >> ./etc/group
   done
 
-  for user in $(ls /tmp/pkgpostinstall/users); do
-    id = $(yq '.id' /tmp/pkgpostinstall/users/$user)
-    gid = $(yq '.gid' /tmp/pkgpostinstall/users/$user)
-    name = $(yq '.name' /tmp/pkgpostinstall/users/$user)
-    login = $(yq '.login' /tmp/pkgpostinstall/users/$user)
-    home = $(yq '.home' /tmp/pkgpostinstall/users/$user)
-    shell = $(yq '.shell' /tmp/pkgpostinstall/users/$user)
+  for user in /tmp/pkgpostinstall/users/*; do
+    local ID = $(yq '.id' /tmp/pkgpostinstall/users/$user)
+    local GID = $(yq '.gid' /tmp/pkgpostinstall/users/$user)
+    local NAME = $(yq '.name' /tmp/pkgpostinstall/users/$user)
+    local LOGIN = $(yq '.login' /tmp/pkgpostinstall/users/$user)
+    local HOME = $(yq '.home' /tmp/pkgpostinstall/users/$user)
+    local SHELL = $(yq '.shell' /tmp/pkgpostinstall/users/$user)
 
-    echo "Adding user $login with id $id and gid $gid."
+    echo "Adding user $LOGIN with id $ID and gid $GID."
 
     # add the user
-    echo "$login:*:$id:$gid:$name:$home:$shell" >> ./etc/passwd
+    echo "$LOGIN:*:$ID:$GID:$NAME:$HOME:$SHELL" >> ./etc/passwd
   done
 
   # cleanup
