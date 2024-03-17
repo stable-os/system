@@ -16,8 +16,10 @@ for package in $(ls ./etc/pkgs); do
     id = $(yq '.id' /tmp/pkgpostinstall/groups/$group)
     name = $(yq '.name' /tmp/pkgpostinstall/groups/$group)
 
+    echo "Adding group $name with id $id."
+
     # add the group
-    echo "$id::$name:" >> $OUT/etc/group
+    echo "$id::$name:" >> ./etc/group
   done
 
   for user in $(ls /tmp/pkgpostinstall/users); do
@@ -28,13 +30,15 @@ for package in $(ls ./etc/pkgs); do
     home = $(yq '.home' /tmp/pkgpostinstall/users/$user)
     shell = $(yq '.shell' /tmp/pkgpostinstall/users/$user)
 
+    echo "Adding user $login with id $id and gid $gid."
+
     # add the user
-    echo "$login:*:$id:$gid:$name:$home:$shell" >> $OUT/etc/passwd
+    echo "$login:*:$id:$gid:$name:$home:$shell" >> ./etc/passwd
   done
 
   # cleanup
   rm -r /tmp/pkgpostinstall
 done
 
-cat $OUT/etc/passwd
-cat $OUT/etc/group
+cat ./etc/passwd
+cat ./etc/group
