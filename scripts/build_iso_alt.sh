@@ -124,6 +124,7 @@ cp /tmp/filesystemimage_decompressed.ext4 /tmp/squashfsimage/LiveOS/rootfs.img
 # create squashfs image
 mksquashfs /tmp/squashfsimage /tmp/filesystemimage_decompressed.squashfs # -comp gzip -Xbcj x86 -b 1M -noappend
 
+mkdir -pv /tmp/livecd/LiveOS
 mv -v /tmp/filesystemimage_decompressed.squashfs /tmp/livecd/LiveOS/squashfs.img
 
 cat >/tmp/livecd/boot/grub/grub.cfg <<"EOF"
