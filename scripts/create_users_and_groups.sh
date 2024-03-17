@@ -9,7 +9,7 @@ for package in $(ls ./etc/pkgs); do
 
   echo "Handling package $package."
 
-  yq /tmp/pkgpostinstall/package.toml
+  yq /tmp/pkgpostinstall/package.toml -oy
 
   # split all the users and groups into separate files
   # and move them to the folders
