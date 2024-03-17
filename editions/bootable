@@ -289,3 +289,5 @@ popt
 slang
 uri
 libnl
+newt
+wpa_supplicant
