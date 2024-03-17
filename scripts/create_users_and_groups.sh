@@ -20,8 +20,8 @@ for package in $(ls ./etc/pkgs); do
   ls -l /tmp/pkgpostinstall/groups
 
   for group in /tmp/pkgpostinstall/groups/*; do
-    local ID = $(yq '.id' /tmp/pkgpostinstall/groups/$group)
-    local NAME = $(yq '.name' /tmp/pkgpostinstall/groups/$group)
+    ID = $(yq '.id' $group)
+    NAME = $(yq '.name' $group)
 
     echo "Adding group $NAME with id $ID."
 
@@ -30,12 +30,12 @@ for package in $(ls ./etc/pkgs); do
   done
 
   for user in /tmp/pkgpostinstall/users/*; do
-    local ID = $(yq '.id' /tmp/pkgpostinstall/users/$user)
-    local GID = $(yq '.gid' /tmp/pkgpostinstall/users/$user)
-    local NAME = $(yq '.name' /tmp/pkgpostinstall/users/$user)
-    local LOGIN = $(yq '.login' /tmp/pkgpostinstall/users/$user)
-    local HOME = $(yq '.home' /tmp/pkgpostinstall/users/$user)
-    local SHELL = $(yq '.shell' /tmp/pkgpostinstall/users/$user)
+    ID = $(yq '.id' $user)
+    GID = $(yq '.gid' $user)
+    NAME = $(yq '.name' $user)
+    LOGIN = $(yq '.login' $user)
+    HOME = $(yq '.home' $user)
+    SHELL = $(yq '.shell' $user)
 
     echo "Adding user $LOGIN with id $ID and gid $GID."
 
