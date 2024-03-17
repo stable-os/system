@@ -108,6 +108,11 @@ mount /tmp/filesystemimage_decompressed.ext4 /tmp/filesystemimage_decompressed_e
 cp -a /tmp/filesystemimage_decompressed/* /tmp/filesystemimage_decompressed_ext4
 umount /tmp/filesystemimage_decompressed_ext4
 
+mkdir -pv /tmp/livecd/LiveOS/boot
+
+# copy kernel and stuff before wiping the fs image
+cp /tmp/filesystemimage_decompressed/boot/vmlinuz-* /tmp/livecd/LiveOS/boot
+
 rm -rf /tmp/filesystemimage_decompressed
 
 # move to squashfs img file
@@ -117,7 +122,6 @@ cp /tmp/filesystemimage_decompressed.ext4 /tmp/squashfsimage/LiveOS/rootfs.img
 # create squashfs image
 mksquashfs /tmp/squashfsimage /tmp/filesystemimage_decompressed.squashfs # -comp gzip -Xbcj x86 -b 1M -noappend
 
-mkdir -pv /tmp/livecd/LiveOS
 mv -v /tmp/filesystemimage_decompressed.squashfs /tmp/livecd/LiveOS/squashfs.img
 
 # copy kernel, config and system map
