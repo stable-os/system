@@ -108,11 +108,13 @@ mount /tmp/filesystemimage_decompressed.ext4 /tmp/filesystemimage_decompressed_e
 cp -a /tmp/filesystemimage_decompressed/* /tmp/filesystemimage_decompressed_ext4
 umount /tmp/filesystemimage_decompressed_ext4
 
-mkdir -pv /tmp/livecd/LiveOS/boot
+mkdir -pv /tmp/livecd/boot/grub
 
 # copy kernel and stuff before wiping the fs image
-cp /tmp/filesystemimage_decompressed/boot/vmlinuz-* /tmp/livecd/LiveOS/boot
+cp /tmp/filesystemimage_decompressed/boot/* /tmp/livecd/boot
+cp /tmp/initramfs.img /tmp/livecd/boot/initramfs.img
 
+# cleanup
 rm -rf /tmp/filesystemimage_decompressed
 
 # move to squashfs img file
@@ -123,11 +125,6 @@ cp /tmp/filesystemimage_decompressed.ext4 /tmp/squashfsimage/LiveOS/rootfs.img
 mksquashfs /tmp/squashfsimage /tmp/filesystemimage_decompressed.squashfs # -comp gzip -Xbcj x86 -b 1M -noappend
 
 mv -v /tmp/filesystemimage_decompressed.squashfs /tmp/livecd/LiveOS/squashfs.img
-
-# copy kernel, config and system map
-mkdir -pv /tmp/livecd/boot/grub
-cp /tmp/filesystemimage_decompressed/boot/* /tmp/livecd/boot
-cp /tmp/initramfs.img /tmp/livecd/boot/initramfs.img
 
 cat >/tmp/livecd/boot/grub/grub.cfg <<"EOF"
 # Begin /boot/grub/grub.cfg
