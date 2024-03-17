@@ -11,5 +11,5 @@ git clone https://github.com/containers/skopeo /home/runner/go/src/github.com/co
 cd /home/runner/go/src/github.com/containers/skopeo && DISABLE_DOCS=1 make bin/skopeo && sudo make install
 
 # tool for reading the toml files
-wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq &&\
-    chmod +x /usr/bin/yq
+sudo wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/bin/yq
+sudo chmod 777 /usr/bin/yq
