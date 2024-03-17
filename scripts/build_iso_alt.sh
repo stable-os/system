@@ -101,12 +101,14 @@ EOF
 
 echo "Using ext4 wrapper"
 # move to ext4 img file
-dd if=/dev/zero of=/tmp/filesystemimage_decompressed.ext4 bs=1M count=8192
+dd if=/dev/zero of=/tmp/filesystemimage_decompressed.ext4 bs=1M count=16384
 mkfs.ext4 /tmp/filesystemimage_decompressed.ext4
 mkdir /tmp/filesystemimage_decompressed_ext4
 mount /tmp/filesystemimage_decompressed.ext4 /tmp/filesystemimage_decompressed_ext4
 cp -a /tmp/filesystemimage_decompressed/* /tmp/filesystemimage_decompressed_ext4
 umount /tmp/filesystemimage_decompressed_ext4
+
+rm -rf /tmp/filesystemimage_decompressed
 
 # move to squashfs img file
 mkdir -pv /tmp/squashfsimage/LiveOS
