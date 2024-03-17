@@ -15,7 +15,7 @@ set -e
 # done
 
 # rm -rf packages
-mkdir stable-os-build
+mkdir -pv stable-os-build/etc/pkgs
 
 # run through all lines in the edition file, it's stored in editions/$EDITION
 for package in $(cat editions/$EDITION); do
@@ -38,6 +38,9 @@ for package in $(cat editions/$EDITION); do
     # delete and recreate build repo to save disk space
     rm -rf $BUILD_REPO
     ostree --repo=$BUILD_REPO init --mode=bare-user
+
+    # copy the package.toml file to the dedicated directory for later group + user creation
+    cp stable-os-build/package.toml stable-os-build/etc/pkgs/${package}
 done
 
 set +e
@@ -48,13 +51,18 @@ mkdir -p mnt
 rofiles-fuse stable-os-build mnt
 # Now run global "triggers", generate cache files:
 ldconfig -r mnt
-#   (Insert other programs here)
 
 # we can't do this right now because chmod does not work on Github Actions, would have to be left to the installer
 # sudo chroot ./mnt /usr/sbin/make-ca -g || true
 
+# temporarily move into the mnt directory to run create_users_and_groups.sh
+cd mnt
+chmod +x ../create_users_and_groups.sh
+../create_users_and_groups.sh
+cd ..
+
+# cleanup
 rm -rf mnt/package.toml
-# ln -svf /usr/bin/bash mnt/bin/sh
 
 # there are still some files in the top directories that need to be moved to /usr
 cp mnt/sbin/* mnt/usr/sbin/

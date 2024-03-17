@@ -293,3 +293,5 @@ newt
 wpa_supplicant
 mobile-broadband-provider-info
 networkmanager
+gnome-settings-daemon
+gnome-shell
