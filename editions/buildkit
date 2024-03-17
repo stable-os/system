@@ -329,3 +329,12 @@ cups
 libtirpc
 xwayland
 mutter
+dhcpcd
+io-socket-ssl
+iptables
+libndp
+net-ssleay
+ntp
+popt
+slang
+uri
