@@ -7,6 +7,8 @@ for package in $(ls ./etc/pkgs); do
   # copy the file to /tmp
   cp ./etc/pkgs/$package /tmp/pkgpostinstall/package.toml
 
+  echo "Handling package $package."
+
   # split all the users and groups into separate files
   # and move them to the folders
   yq '.user.[]' /tmp/pkgpostinstall/package.toml -oy -s '"/tmp/pkgpostinstall/users/" + .id'
