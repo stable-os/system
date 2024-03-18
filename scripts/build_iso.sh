@@ -99,6 +99,8 @@ cat >/tmp/filesystemimage_decompressed/etc/shadow <<"EOF"
 root:$1$cln3295b$cIb9zBngnbVV/PLn05q.T0:19740::::::
 EOF
 
+cp /tmp/filesystemimage_decompressed/usr/lib/ld-linux-x86-64.so.2 /tmp/filesystemimage_decompressed/usr/lib/ld-linux-x86-64.so
+
 # set to false to place root fs on squashfs, true to place it inside ext4 wrapper
 USE_EXT4=false
 

@@ -99,6 +99,8 @@ cat >/tmp/filesystemimage_decompressed/etc/shadow <<"EOF"
 root:$1$cln3295b$cIb9zBngnbVV/PLn05q.T0:19740::::::
 EOF
 
+cp /tmp/filesystemimage_decompressed/usr/lib/ld-linux-x86-64.so.2 /tmp/filesystemimage_decompressed/usr/lib/ld-linux-x86-64.so
+
 echo "Using ext4 wrapper"
 # move to ext4 img file
 dd if=/dev/zero of=/tmp/filesystemimage_decompressed.ext4 bs=1M count=16384
