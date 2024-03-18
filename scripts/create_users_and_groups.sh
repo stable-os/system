@@ -54,7 +54,7 @@ for package in $(ls ./etc/pkgs); do
     echo "Adding user $LOGIN with id $ID and gid $GID."
 
     # add the user
-    echo "$LOGIN:*:$ID:$GID:$NAME:$HOME:$SHELL" >> ./etc/passwd
+    echo "$LOGIN:x:$ID:$GID:$NAME:$HOME:$SHELL" >> ./etc/passwd
   done
 
   # cleanup
