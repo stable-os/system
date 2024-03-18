@@ -142,12 +142,12 @@ insmod part_gpt
 insmod ext2
 
 menuentry "Linux 6.4.12-lfs-12.0" {
-    linux   /boot/vmlinuz-6.4.12-lfs-12.0 root=live:/dev/sr0 rd.live.overlay.overlayfs=1 console=ttyS0,115200n8 console=tty0
+    linux   /boot/vmlinuz-6.4.12-lfs-12.0 root=live:/dev/sr0 rd.live.overlay.overlayfs=1 init=/usr/lib/systemd/systemd console=ttyS0,115200n8 console=tty0
     initrd  /boot/initramfs.img
 }
 
 menuentry "Linux 6.4.12-lfs-12.0 RESCUE MODE" {
-    linux   /boot/vmlinuz-6.4.12-lfs-12.0 root=live:/dev/sr0 rd.live.overlay.overlayfs=1 console=ttyS0,115200n8 console=tty0 systemd.unit=rescue.target
+    linux   /boot/vmlinuz-6.4.12-lfs-12.0 root=live:/dev/sr0 rd.live.overlay.overlayfs=1 init=/usr/lib/systemd/systemd console=ttyS0,115200n8 console=tty0 systemd.unit=rescue.target
     initrd  /boot/initramfs.img
 }
 EOF
