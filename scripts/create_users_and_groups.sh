@@ -23,6 +23,13 @@ for package in $(ls ./etc/pkgs); do
     ID=$(yq '.id' $group)
     NAME=$(yq '.name' $group)
 
+    # make sure the id string is not empty
+    # if it is, skip the group
+    if [ -z "$ID" ]; then
+      echo "Skipping group $NAME because id ($ID) is empty."
+      continue
+    fi
+
     echo "Adding group $NAME with id $ID."
 
     # add the group
@@ -36,6 +43,13 @@ for package in $(ls ./etc/pkgs); do
     LOGIN=$(yq '.login' $user)
     HOME=$(yq '.home' $user)
     SHELL=$(yq '.shell' $user)
+
+    # make sure the id string is not empty
+    # if it is, skip the group
+    if [ -z "$ID" ]; then
+      echo "Skipping user $NAME ($LOGIN) because id ($ID) is empty."
+      continue
+    fi
 
     echo "Adding user $LOGIN with id $ID and gid $GID."
 
