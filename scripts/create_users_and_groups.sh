@@ -33,7 +33,7 @@ for package in $(ls ./etc/pkgs); do
     echo "Adding group $NAME with id $ID."
 
     # add the group
-    echo "$ID::$NAME:" >> ./etc/group
+    echo "$NAME:x:$ID:" >> ./etc/group
   done
 
   for user in /tmp/pkgpostinstall/users/*; do
