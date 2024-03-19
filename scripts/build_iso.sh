@@ -30,6 +30,7 @@ dracut -o "dracut-systemd systemd" --add "dmsquash-live" /tmp/initramfs.img "$KE
 rm -rf /var/tmp
 
 systemctl preset-all
+augenrules --load
 EOT
 
 umount /tmp/filesystemimage_decompressed/proc
