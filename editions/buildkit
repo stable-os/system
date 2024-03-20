@@ -351,3 +351,4 @@ xorg-applications
 xorg-fonts
 xorg-server
 authselect
+xorg-video-fbdev
