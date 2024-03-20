@@ -2,7 +2,7 @@
 for package in $(ls ./etc/pkgs); do
 
   # create the temporary directory
-  mkdir -pv /tmp/pkgpostinstall/{users,groups}
+  mkdir -pv /tmp/pkgpostinstall/{users,groups,shadow}
 
   # copy the file to /tmp
   cp ./etc/pkgs/$package /tmp/pkgpostinstall/package.toml
@@ -15,6 +15,7 @@ for package in $(ls ./etc/pkgs); do
   # and move them to the folders
   yq '.user.[]' /tmp/pkgpostinstall/package.toml -oy -s '"/tmp/pkgpostinstall/users/" + .id'
   yq '.group.[]' /tmp/pkgpostinstall/package.toml -oy -s '"/tmp/pkgpostinstall/groups/" + .id'
+  yq '.shadow.[]' /tmp/pkgpostinstall/package.toml -oy -s '"/tmp/pkgpostinstall/shadow/" + .id'
 
   ls -l /tmp/pkgpostinstall/users
   ls -l /tmp/pkgpostinstall/groups
@@ -34,6 +35,16 @@ for package in $(ls ./etc/pkgs); do
 
     # add the group
     echo "$NAME:x:$ID:" >> ./etc/group
+  done
+
+  for shadow in /tmp/pkgpostinstall/shadow/*; do
+    NAME=$(yq '.name' $shadow)
+    PASSWORD=$(yq '.password' $shadow)
+
+    echo "Adding shadow entry for user $NAME with password $PASSWORD."
+
+    # add the group
+    echo "$NAME:$PASSWORD:::::::" >> ./etc/shadow
   done
 
   for user in /tmp/pkgpostinstall/users/*; do
@@ -63,3 +74,4 @@ done
 
 cat ./etc/passwd
 cat ./etc/group
+cat ./etc/shadow
