@@ -346,4 +346,4 @@ gnome-settings-daemon
 gnome-shell
 catatonit
 go
-xorg-server
+xorg-fonts
