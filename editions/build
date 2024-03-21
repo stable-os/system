@@ -403,3 +403,4 @@ btrfs-progs
 libva
 libvdpau
 podman
+spirv-headers
