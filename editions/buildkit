@@ -353,3 +353,16 @@ xorg-server
 authselect
 xorg-video-fbdev
 xorg-video-vesa
+xorg-input-acecad
+xorg-input-elographics
+xorg-input-evdev
+xorg-input-fpit
+xorg-input-hyperpen
+xorg-input-joystick
+xorg-input-libinput
+xorg-input-mouse
+xorg-input-mutouch
+xorg-input-penmount
+xorg-input-synaptics
+xorg-input-vmmouse
+xorg-input-void
