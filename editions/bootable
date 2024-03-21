@@ -355,3 +355,4 @@ libva
 libvdpau
 podman
 spirv-headers
+spirv-tools
