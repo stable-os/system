@@ -352,3 +352,4 @@ xorg-fonts
 xorg-server
 authselect
 xorg-video-fbdev
+xorg-video-vesa
