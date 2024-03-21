@@ -400,3 +400,4 @@ xorg-video-voodoo
 xorg-video-ast
 xorg-video-nv
 lzo
+btrfs-progs
