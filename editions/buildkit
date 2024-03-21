@@ -397,3 +397,5 @@ xorg-video-v4l
 xorg-video-vboxvideo
 xorg-video-vmware
 xorg-video-voodoo
+xorg-video-ast
+xorg-video-nv
