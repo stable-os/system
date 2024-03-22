@@ -362,3 +362,4 @@ bindgen
 cbindgen
 conmon
 yajl2
+crun
