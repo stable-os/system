@@ -406,3 +406,4 @@ libvdpau
 podman
 spirv-headers
 spirv-tools
+libclc
