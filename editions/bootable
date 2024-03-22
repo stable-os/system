@@ -358,3 +358,5 @@ spirv-headers
 spirv-tools
 libclc
 spirv-llvm-translator
+bindgen
+cbindgen
