@@ -410,3 +410,5 @@ libclc
 spirv-llvm-translator
 bindgen
 cbindgen
+conmon
+yajl2
