@@ -414,3 +414,4 @@ conmon
 yajl2
 crun
 abseil
+protobuf
