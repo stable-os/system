@@ -12,7 +12,7 @@ mkdir -pv /var/tmp
 mkdir -pv /tmp/filesystemimage_decompressed/{etc/containers,tmp/podmanrunroot,tmp/podmangraphroot}
 
 # set the runroot and graphroot to the image dir
-cat <<EOF > $OUT/etc/containers/storage.conf
+cat <<EOF > /etc/containers/storage.conf
 [storage]
 driver = "vfs"
 runroot = "/tmp/filesystemimage_decompressed/tmp/podmanrunroot"
