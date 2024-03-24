@@ -11,15 +11,7 @@ mkdir -pv /tmp/filesystemimage_decompressed/{proc,tmp,etc,boot}
 mkdir -pv /var/tmp
 mkdir -pv /tmp/filesystemimage_decompressed/{etc/containers,tmp/podmanrunroot,tmp/podmangraphroot}
 
-# set the runroot and graphroot to the image dir
-cat <<EOF > /etc/containers/storage.conf
-[storage]
-driver = "vfs"
-runroot = "/tmp/filesystemimage_decompressed/tmp/podmanrunroot"
-graphroot = "/tmp/filesystemimage_decompressed/tmp/podmangraphroot"
-EOF
-
-podman pull --imagestore=/tmp/filesystemimage_decompressed/image ghcr.io/stable-os/stable-os-bootable:latest
+podman pull --root=/tmp/filesystemimage_decompressed/podmanimage ghcr.io/stable-os/stable-os-bootable:latest
 
 # skopeo copy docker://ghcr.io/stable-os/stable-os-bootable:latest docker-archive:/tmp/filesystemimage_decompressed/image.tar:stable-os-bootable:latest
 
