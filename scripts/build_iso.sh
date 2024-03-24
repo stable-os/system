@@ -9,6 +9,15 @@ mkdir -pv /tmp/filesystemimage_decompressed/{proc,tmp,etc,boot}
 
 # download the image for the installer
 mkdir -pv /var/tmp
+mkdir -pv /tmp/filesystemimage_decompressed/{etc/containers,tmp/podmanrunroot,tmp/podmangraphroot}
+
+# set the runroot and graphroot to the image dir
+cat <<EOF > $OUT/etc/containers/storage.conf
+[storage]
+driver = "vfs"
+runroot = "/tmp/filesystemimage_decompressed/tmp/podmanrunroot"
+graphroot = "/tmp/filesystemimage_decompressed/tmp/podmangraphroot"
+EOF
 
 podman pull --imagestore=/tmp/filesystemimage_decompressed/image ghcr.io/stable-os/stable-os-bootable:latest
 
