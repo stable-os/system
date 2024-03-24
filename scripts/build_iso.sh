@@ -11,7 +11,12 @@ mkdir -pv /tmp/filesystemimage_decompressed/{proc,tmp,etc,boot}
 mkdir -pv /var/tmp
 mkdir -pv /tmp/filesystemimage_decompressed/{etc/containers,tmp/podmanrunroot,tmp/podmangraphroot}
 
-podman pull --root=/tmp/filesystemimage_decompressed/podmanimage ghcr.io/stable-os/stable-os-bootable:latest
+# TODO: Perform the nessecary database mods to make the podman errors go away
+# UPDATE DBConfig SET StaticDir = '/podmanimage/libpod';
+# UPDATE DBConfig SET GraphRoot = '/podmanimage';
+
+# We install the postflash before installing the actual image to prevent running out of ram
+podman pull --root=/tmp/filesystemimage_decompressed/podmanimage ghcr.io/stable-os/stable-os-postflash:latest
 
 # skopeo copy docker://ghcr.io/stable-os/stable-os-bootable:latest docker-archive:/tmp/filesystemimage_decompressed/image.tar:stable-os-bootable:latest
 
