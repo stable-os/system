@@ -8,6 +8,7 @@ mkdir -pv /tmp/filesystemimage_decompressed && tar -xf $(file --mime-type /tmp/f
 mkdir -pv /tmp/filesystemimage_decompressed/{proc,tmp,etc,boot}
 
 # download the image for the installer
+mkdir -pv /var/tmp
 skopeo copy docker://ghcr.io/stable-os/stable-os-bootable:latest docker-archive:/tmp/filesystemimage_decompressed/image.tar:stable-os-bootable:latest
 
 # create the fstab file
