@@ -7,6 +7,9 @@ mkdir -pv /tmp/filesystemimage_decompressed && tar -xf $(file --mime-type /tmp/f
 # this should get mounted later on by fstab i think
 mkdir -pv /tmp/filesystemimage_decompressed/{proc,tmp,etc,boot}
 
+# download the image for the installer
+skopeo copy docker://ghcr.io/stable-os/stable-os-bootable:latest docker-archive:/tmp/filesystemimage_decompressed/image.tar:stable-os-bootable:latest
+
 # create the fstab file
 # cat >/tmp/filesystemimage_decompressed/etc/fstab <<"EOF"
 # # <file system> <mount point>   <type>  <options>       <dump>  <pass>
@@ -31,6 +34,12 @@ rm -rf /var/tmp
 
 systemctl preset-all
 augenrules --load
+
+# load the image
+podman load -i /image.tar
+
+# delete the image file
+rm -f /image.tar
 EOT
 
 umount /tmp/filesystemimage_decompressed/proc
