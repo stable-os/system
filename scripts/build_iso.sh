@@ -9,7 +9,10 @@ mkdir -pv /tmp/filesystemimage_decompressed/{proc,tmp,etc,boot}
 
 # download the image for the installer
 mkdir -pv /var/tmp
-skopeo copy docker://ghcr.io/stable-os/stable-os-bootable:latest docker-archive:/tmp/filesystemimage_decompressed/image.tar:stable-os-bootable:latest
+
+podman pull --imagestore=/tmp/filesystemimage_decompressed/image ghcr.io/stable-os/stable-os-bootable:latest
+
+# skopeo copy docker://ghcr.io/stable-os/stable-os-bootable:latest docker-archive:/tmp/filesystemimage_decompressed/image.tar:stable-os-bootable:latest
 
 # create the fstab file
 # cat >/tmp/filesystemimage_decompressed/etc/fstab <<"EOF"
@@ -35,12 +38,6 @@ rm -rf /var/tmp
 
 systemctl preset-all
 augenrules --load
-
-# load the image
-podman load -i /image.tar
-
-# delete the image file
-rm -f /image.tar
 EOT
 
 umount /tmp/filesystemimage_decompressed/proc
