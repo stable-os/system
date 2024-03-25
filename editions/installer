@@ -37,3 +37,4 @@ dracut
 utillinux
 libxcrypt
 kmod
+zstd
