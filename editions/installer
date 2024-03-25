@@ -33,3 +33,5 @@ pam
 iptables
 iana-etc
 shadow
+dracut
+utillinux
