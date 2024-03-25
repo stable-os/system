@@ -57,6 +57,7 @@ jobs:
           - bootable
           - build-test
           - postflash
+          - installer
 
     steps:
       - name: Maximize build space
@@ -125,7 +126,7 @@ jobs:
 
   build_iso:
     runs-on: ubuntu-latest
-    # needs: [build]
+    needs: [build]
     # container: ghcr.io/stable-os/stable-os-build:latest
 
     permissions:

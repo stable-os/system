@@ -1,6 +1,6 @@
 make-ca -g
 
-skopeo copy docker://ghcr.io/stable-os/stable-os-bootable:latest dir:/tmp/filesystemimage --dest-decompress
+skopeo copy docker://ghcr.io/stable-os/stable-os-installer:latest dir:/tmp/filesystemimage --dest-decompress
 
 mkdir -pv /tmp/filesystemimage_decompressed && tar -xf $(file --mime-type /tmp/filesystemimage/* | awk -F': ' '$2=="application/x-tar"{print $1}' | head -n 1) -C /tmp/filesystemimage_decompressed
 
