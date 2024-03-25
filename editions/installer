@@ -35,3 +35,4 @@ iana-etc
 shadow
 dracut
 utillinux
+libxcrypt
