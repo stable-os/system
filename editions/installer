@@ -42,3 +42,4 @@ libgcrypt
 zlib
 cpio
 libseccomp
+libgpg-error
