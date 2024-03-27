@@ -39,3 +39,4 @@ libxcrypt
 kmod
 zstd
 libgcrypt
+zlib
