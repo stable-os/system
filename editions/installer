@@ -43,3 +43,4 @@ zlib
 cpio
 libseccomp
 libgpg-error
+audit
