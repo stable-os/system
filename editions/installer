@@ -40,3 +40,5 @@ kmod
 zstd
 libgcrypt
 zlib
+cpio
+libseccomp
