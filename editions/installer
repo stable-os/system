@@ -44,3 +44,7 @@ cpio
 libseccomp
 libgpg-error
 audit
+libcap-ng
+gmp
+mpfr
+mpc
