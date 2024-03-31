@@ -45,3 +45,7 @@ libseccomp
 libgpg-error
 audit
 squashfs-tools
+libcap-ng
+gmp
+mpfr
+mpc
