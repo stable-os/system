@@ -50,3 +50,5 @@ gmp
 mpfr
 mpc
 lvm2
+tar
+gzip
