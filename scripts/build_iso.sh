@@ -39,7 +39,7 @@ chroot /tmp/filesystemimage_decompressed /usr/bin/bash <<"EOT"
 KERNEL_VERSION=$(find /lib/modules -maxdepth 1 -type d -printf "%f" | sed 's/modules//')
 echo KERNEL VERSION: $KERNEL_VERSION
 mkdir -pv /var/tmp
-dracut /tmp/initramfs.img "$KERNEL_VERSION"
+dracut --add dmsquash-live /tmp/initramfs.img "$KERNEL_VERSION"
 rm -rf /var/tmp
 
 systemctl preset-all
