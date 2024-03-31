@@ -44,3 +44,4 @@ cpio
 libseccomp
 libgpg-error
 audit
+squashfs-tools
