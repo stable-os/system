@@ -53,3 +53,4 @@ lvm2
 tar
 gzip
 essential-files
+live-environment-auth
