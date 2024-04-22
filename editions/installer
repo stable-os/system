@@ -57,3 +57,4 @@ live-environment-auth
 libpgpme
 libassuan
 liveconf
+dbus

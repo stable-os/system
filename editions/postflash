@@ -30,3 +30,4 @@ podman
 bootc
 essential-files
 glib
+dbus
