@@ -55,3 +55,4 @@ gzip
 essential-files
 live-environment-auth
 libpgpme
+libassuan
