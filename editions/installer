@@ -54,3 +54,4 @@ tar
 gzip
 essential-files
 live-environment-auth
+libpgpme
