@@ -31,3 +31,4 @@ bootc
 essential-files
 glib
 dbus
+expat

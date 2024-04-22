@@ -58,3 +58,4 @@ libpgpme
 libassuan
 liveconf
 dbus
+expat
