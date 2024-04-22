@@ -29,3 +29,4 @@ libclc
 podman
 bootc
 essential-files
+glib
